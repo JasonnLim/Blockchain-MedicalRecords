@@ -19,7 +19,7 @@ export default props => {
                 </Header.Content>
             </Header>
 
-            <MenuBar />
+            <MenuBar/>
             {props.children}
         </Container>
     );
