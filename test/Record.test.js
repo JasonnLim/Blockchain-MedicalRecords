@@ -17,7 +17,37 @@ beforeEach(async () => {
 });
 
 describe('Records', () => {
-    it('deploys record contract successfully', () => {
+    it('can deploy record contract', () => {
         assert.ok(record.options.address);
+    });
+
+    it('can add record', async () => {
+        await record.methods.setDetails(
+            'John', '22', '213134', 'Flu'
+        ).send({ from: accounts[0], gas: '1000000' });
+    });
+
+    it('can retrieve all record address', async () => {
+        await record.methods.setDetails(
+            'John', '22', '213134', 'Flu'
+        ).send({ from: accounts[0], gas: '1000000' });
+
+        const allRecords = await record.methods.getPatients().call();
+
+        const owner = await record.methods.owner().call();
+
+        assert.equal(allRecords, owner);
+    });
+
+    it('can search for a patient', async () => {
+        await record.methods.setDetails(
+            'John', '22', '213134', 'Flu'
+        ).send({ from: accounts[0], gas: '1000000' });
+        
+        const owner = await record.methods.owner().call();
+
+        names = await record.methods.searchPatient(owner).call();
+
+        console.log(names[0]);
     });
 });

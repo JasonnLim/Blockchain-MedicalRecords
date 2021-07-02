@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
+import { Link } from '../routes';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -16,7 +17,9 @@ class RecordsList extends Component {
             return {
                 header: address,
                 description: (
-                    <a>View Record</a>
+                    <Link route={`/record/${address}`}>
+                        <a>View Record</a>
+                    </Link>
                 ),
                 fluid: true
             };

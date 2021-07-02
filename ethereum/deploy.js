@@ -23,7 +23,7 @@ const deploy = async () => {
     //Display the address of the contract 
     console.log('Contract deployed to ', result.options.address);
 
-    //Contract deployed to 0x5A30Fc6613Bd59C48107bC2e57f1C71bD9dE68B2
+    //Contract deployed to 0x076c37FcF71071c25c66d49728cc22ccee6F2C97
 };
 
 deploy();
