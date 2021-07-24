@@ -45,6 +45,7 @@ describe('Records', () => {
         ).send({ from: accounts[0], gas: '1000000' });
         
         const owner = await record.methods.owner().call();
+        console.log(owner);
 
         names = await record.methods.searchPatient(owner).call();
 

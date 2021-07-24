@@ -6,13 +6,15 @@ import web3 from '../ethereum/web3';
 
 class RecordDetails extends Component {
     static async getInitialProps(props) {
-        const owner = await record.methods.owner().call();
-        const records = await record.methods.searchPatient(owner).call();
-        
+        const addr = props.query.address;
+        const records = await record.methods.searchPatient(addr).call({from: addr});
+
         return {
-            address: props.query.address,
-            names: records[0],
-            owner: owner
+            address: addr,
+            name: records[0],
+            age: records[1],
+            phone: records[2],
+            disease: records[3]
         };
     }
 
@@ -20,9 +22,11 @@ class RecordDetails extends Component {
         return (
             <Layout>
                 <div>
-                    {this.props.address}
-                    {this.props.names}
-                    {this.props.owner}
+                    {this.props.address}<br/>
+                    {this.props.name}<br/>
+                    {this.props.age}<br/>
+                    {this.props.phone}<br/>
+                    {this.props.disease}<br/>
                 </div>
             </Layout>
         );

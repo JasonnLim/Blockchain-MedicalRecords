@@ -21,9 +21,10 @@ const deploy = async () => {
         .send({ gas: '1000000', from: accounts[0] });
 
     //Display the address of the contract 
-    console.log('Contract deployed to ', result.options.address);
+    console.log('Contract deployed to', result.options.address);
 
-    //Contract deployed to 0x076c37FcF71071c25c66d49728cc22ccee6F2C97
+    //Contract deployed to 0x1562271aF1D5E057c4159480B0DA2f4E504B9Def
+    //Always go to Record.js after updating solidity code
 };
 
 deploy();

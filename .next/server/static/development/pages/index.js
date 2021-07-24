@@ -303,7 +303,7 @@ __webpack_require__.r(__webpack_exports__);
 var _build_Record_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./build/Record.json */ "./ethereum/build/Record.json", 1);
 
 
-var instance = new _web3__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(JSON.parse(_build_Record_json__WEBPACK_IMPORTED_MODULE_1__.interface), '0x076c37FcF71071c25c66d49728cc22ccee6F2C97' //Deployed Contract Code
+var instance = new _web3__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(JSON.parse(_build_Record_json__WEBPACK_IMPORTED_MODULE_1__.interface), '0x1562271aF1D5E057c4159480B0DA2f4E504B9Def' //Deployed Contract Code //Everytime contract code is changed, need to update this
 );
 /* harmony default export */ __webpack_exports__["default"] = (instance);
 
@@ -318,18 +318,41 @@ var instance = new _web3__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(JS
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! web3 */ "web3");
-/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(web3__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime-corejs2/regenerator */ "./node_modules/@babel/runtime-corejs2/regenerator/index.js");
+/* harmony import */ var _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @babel/runtime-corejs2/helpers/esm/asyncToGenerator */ "./node_modules/@babel/runtime-corejs2/helpers/esm/asyncToGenerator.js");
+/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! web3 */ "web3");
+/* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(web3__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 var web3;
 
 if (typeof window !== 'undefined' && window.web3 !== 'undefined') {
   //We are in the browser AND metamask is running
-  web3 = new web3__WEBPACK_IMPORTED_MODULE_0___default.a(window.web3.currentProvider);
+
+  /*#__PURE__*/
+  Object(_babel_runtime_corejs2_helpers_esm_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1__["default"])( /*#__PURE__*/_babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+    return _babel_runtime_corejs2_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return window.web3.currentProvider.enable();
+
+          case 2:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee);
+  }));
+
+  web3 = new web3__WEBPACK_IMPORTED_MODULE_2___default.a(window.web3.currentProvider);
 } else {
   //We are on the server OR the user is not running metamask
-  var provider = new web3__WEBPACK_IMPORTED_MODULE_0___default.a.providers.HttpProvider('https://rinkeby.infura.io/v3/cae3e4c525ba4a75b6ae9ffe89ca6160');
-  web3 = new web3__WEBPACK_IMPORTED_MODULE_0___default.a(provider);
+  var provider = new web3__WEBPACK_IMPORTED_MODULE_2___default.a.providers.HttpProvider('https://rinkeby.infura.io/v3/cae3e4c525ba4a75b6ae9ffe89ca6160');
+  web3 = new web3__WEBPACK_IMPORTED_MODULE_2___default.a(provider);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (web3);
