@@ -23,7 +23,7 @@ const deploy = async () => {
     //Display the address of the contract 
     console.log('Contract deployed to', result.options.address);
 
-    //Contract deployed to 0x36A4AAF1F28652DCAe2c640Af7D1278fCF84b3F9
+    //Contract deployed to 0x97ED7e89478c68631f2B3927a3f2477dF763B960
     //Always go to record.js after updating solidity code
 };
 

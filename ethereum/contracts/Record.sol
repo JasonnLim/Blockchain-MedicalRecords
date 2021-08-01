@@ -21,15 +21,15 @@ contract Record {
     
     //Retrieve patient details from the form and save the details
     function setDetails(string _name, string _age, string _phone, string _diseases) public {
-        var p = patients[owner];
+        var p = patients[msg.sender];
         
         p.name = _name;
         p.age = _age;
         p.phone = _phone;
         p.diseases = _diseases;
         
-        patientList.push(owner);
-        isApproved[owner] = true;
+        patientList.push(msg.sender);
+        isApproved[msg.sender] = true;
     }
     
     //Owner must give permission to doctor only they are allowed to view records

@@ -51,4 +51,21 @@ describe('Records', () => {
 
         console.log(names[0]);
     });
+
+    it('can create patient using multiple accounts', async () => {
+        await record.methods.setDetails(
+            'John', '22', '213134', 'Flu'
+        ).send({ from: accounts[0], gas: '1000000' });
+
+        await record.methods.setDetails(
+            'Josh', '23', '213134', 'Flu'
+        ).send({ from: accounts[1], gas: '1000000' });
+        
+        const allRecords = await record.methods.getPatients().call();
+        console.log(allRecords);
+        const patientlist = await record.methods.patientList(1).call();
+        console.log(patientlist);
+        console.log(accounts[0])
+        console.log(accounts[1])
+    });
 });
