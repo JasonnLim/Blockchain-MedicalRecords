@@ -16,7 +16,7 @@ contract Record {
     
     function Record() public {
         owner = msg.sender;
-        isApproved[msg.sender] = true;
+        isApproved[msg.sender] = false;
     }
     
     //Retrieve patient details from the form and save the details
@@ -29,6 +29,7 @@ contract Record {
         p.diseases = _diseases;
         
         patientList.push(owner);
+        isApproved[owner] = true;
     }
     
     //Owner must give permission to doctor only they are allowed to view records

@@ -303,7 +303,7 @@ __webpack_require__.r(__webpack_exports__);
 var _build_Record_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ./build/Record.json */ "./ethereum/build/Record.json", 1);
 
 
-var instance = new _web3__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(JSON.parse(_build_Record_json__WEBPACK_IMPORTED_MODULE_1__.interface), '0x1562271aF1D5E057c4159480B0DA2f4E504B9Def' //Deployed Contract Code //Everytime contract code is changed, need to update this
+var instance = new _web3__WEBPACK_IMPORTED_MODULE_0__["default"].eth.Contract(JSON.parse(_build_Record_json__WEBPACK_IMPORTED_MODULE_1__.interface), '0x36A4AAF1F28652DCAe2c640Af7D1278fCF84b3F9' //Deployed Contract Code //Everytime contract code is changed, need to update this
 );
 /* harmony default export */ __webpack_exports__["default"] = (instance);
 

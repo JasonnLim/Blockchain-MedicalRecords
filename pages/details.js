@@ -7,7 +7,8 @@ import web3 from '../ethereum/web3';
 class RecordDetails extends Component {
     static async getInitialProps(props) {
         const addr = props.query.address;
-        const records = await record.methods.searchPatient(addr).call({from: addr});
+        const accounts = await web3.eth.getAccounts();
+        const records = await record.methods.searchPatient(addr).call({from: accounts[0]});
 
         return {
             address: addr,
@@ -18,15 +19,43 @@ class RecordDetails extends Component {
         };
     }
 
+    renderCardDisplay() {
+        return(
+            <Card.Group>
+                <Card
+                    fluid
+                    header='Ethereum Address'
+                    description= {this.props.address}
+                />
+                <Card
+                    fluid
+                    header='Name'
+                    description= {this.props.name}
+                />
+                <Card
+                    fluid
+                    header='Age'
+                    description= {this.props.age}
+                />
+                <Card
+                    fluid
+                    header='Phone'
+                    description= {this.props.phone}
+                />
+                <Card
+                    fluid
+                    header='Disease'
+                    description= {this.props.disease}
+                />
+            </Card.Group>
+        );
+    }
+
     render() {
         return (
             <Layout>
                 <div>
-                    {this.props.address}<br/>
-                    {this.props.name}<br/>
-                    {this.props.age}<br/>
-                    {this.props.phone}<br/>
-                    {this.props.disease}<br/>
+                    {this.renderCardDisplay()}
                 </div>
             </Layout>
         );
