@@ -27,6 +27,7 @@ class PatientForm extends Component {
             await record.methods.setDetails(
                 name, age, phone, disease
             ).send({ from: accounts[0] });
+            
         }
         catch (err) {
             this.setState({ errorMessage: err.message });

@@ -63,9 +63,19 @@ describe('Records', () => {
         
         const allRecords = await record.methods.getPatients().call();
         console.log(allRecords);
-        const patientlist = await record.methods.patientList(1).call();
-        console.log(patientlist);
+
         console.log(accounts[0])
         console.log(accounts[1])
+    });
+
+    it('msg.sender lel', async () => {
+        const owner = await record.methods.owner().call();
+        console.log(owner);
+
+        await record.methods.setDetails(
+            'Josh', '23', '213134', 'Flu'
+        ).send({ from: accounts[1], gas: '1000000' });
+
+        assert.equal(owner, accounts[1]);
     });
 });
