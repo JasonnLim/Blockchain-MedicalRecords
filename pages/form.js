@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Message} from 'semantic-ui-react';
+import { Form, Input, Button, Segment, Message} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 
 class PatientForm extends Component {
     state = {
+        ic: '',
         name: '',
-        age: '',
         phone: '',
-        disease: '',
+        gender: '',
+        dob: '',
+        bloodgroup: '',
+        allergies: '',
         loading: false,
         errorMessage: ''
     };
@@ -17,7 +20,7 @@ class PatientForm extends Component {
     onSubmit = async event => {
         event.preventDefault();
 
-        const { name, age, phone, disease } = this.state;
+        const { ic, name, phone, gender, dob, bloodgroup, allergies } = this.state;
 
         this.setState({loading: true, errorMessage: ''});
 
@@ -25,60 +28,105 @@ class PatientForm extends Component {
             const accounts = await web3.eth.getAccounts();
 
             await record.methods.setDetails(
-                name, age, phone, disease
+                ic, name, phone, gender, dob, bloodgroup, allergies
             ).send({ from: accounts[0] });
-            
+
+            alert("Account created successfully!");  
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
+            alert("Account already exists");
         }
 
-        this.setState({ loading: false, name: '', age: '', phone: '', disease: ''});
+        this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', allergies: ''});
     }
 
     render() {
         return (
             <Layout>
-                <h2 style={{ marginTop: '20px', textAlign: 'center' }}>Personal Health Record</h2>
+                <Segment>
+                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Personal Health Record</h2>
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-                    <Form.Field>
-                        <label>Name</label>
-                        <Input                            
-                            value= {this.state.name}
-                            onChange= {event => 
-                                this.setState({ name: event.target.value })}                           
-                        />
-                    </Form.Field>
+                    <Form.Group widths='equal'>
+                        <Form.Field>
+                            <label>IC</label>
+                            <Input
+                                placeholder = 'Eg. 001234010234'                
+                                value= {this.state.ic}
+                                onChange= {event => 
+                                    this.setState({ ic: event.target.value })}                           
+                            />
+                        </Form.Field>
 
-                    <Form.Field>
-                        <label>Age</label>
-                        <Input 
-                            value= {this.state.age}
-                            onChange= {event => 
-                                this.setState({ age: event.target.value })}  
-                        />
-                    </Form.Field>
+                        <Form.Field>
+                            <label>Name</label>
+                            <Input
+                                placeholder = 'Eg. John Smith'                        
+                                value= {this.state.name}
+                                onChange= {event => 
+                                    this.setState({ name: event.target.value })}                           
+                            />
+                        </Form.Field>
 
-                    <Form.Field>
-                        <label>Phone</label>
-                        <Input 
-                            value= {this.state.phone}
-                            onChange= {event => 
-                                this.setState({ phone: event.target.value })}  
-                        />
-                    </Form.Field>
+                        <Form.Field>
+                            <label>Phone</label>
+                            <Input
+                                placeholder = 'Eg. 0123456789'
+                                value= {this.state.phone}
+                                onChange= {event => 
+                                    this.setState({ phone: event.target.value })}  
+                            />
+                        </Form.Field>
+                    </Form.Group>
+                    <br/>              
+                    <Form.Group widths='equal'>
+                        <Form.Field>
+                            <label>Gender</label>
+                            <Input 
+                                placeholder = 'Eg. Male'
+                                value= {this.state.gender}
+                                onChange= {event => 
+                                    this.setState({ gender: event.target.value })}  
+                            />
+                        </Form.Field>
 
-                    <Form.Field>
-                        <label>Disease</label>
-                        <Input 
-                            value= {this.state.disease}
-                            onChange= {event => 
-                                this.setState({ disease: event.target.value })}  
-                        />
-                    </Form.Field>
+                        <Form.Field>
+                            <label>Date of Birth</label>
+                            <Input 
+                                placeholder = 'Eg. 01/01/1997'
+                                value= {this.state.dob}
+                                onChange= {event => 
+                                    this.setState({ dob: event.target.value })}  
+                            />
+                        </Form.Field>
+                    </Form.Group>                   
+                    <br/>
+                    <Form.Group widths='equal'>
+                        <Form.Field>
+                            <label>Blood Group</label>
+                            <Input 
+                                placeholder = 'Eg. A-'
+                                value= {this.state.bloodgroup}
+                                onChange= {event => 
+                                    this.setState({ bloodgroup: event.target.value })}  
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Allergies</label>
+                            <Input 
+                                placeholder = 'Eg. Peanut Allergy Pollen Allergy'
+                                value= {this.state.allergies}
+                                onChange= {event => 
+                                    this.setState({ allergies: event.target.value })}  
+                            />
+                        </Form.Field>
+                    </Form.Group>
+                    <br/>
                     <Message error header="Oops!" content={this.state.errorMessage}/>
                     <Button primary loading={this.state.loading}>Create</Button>
                 </Form>
+                </Segment>
             </Layout>
         );
     }

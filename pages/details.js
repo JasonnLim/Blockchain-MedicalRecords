@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'semantic-ui-react';
+import { Button, Grid, Segment } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -14,11 +14,13 @@ class RecordDetails extends Component {
             records = await record.methods.searchPatient(addr).call({from: accounts[0]}); 
 
             return {
-                address: addr,
-                name: records[0],
-                age: records[1],
+                ic: records[0],
+                name: records[1],
                 phone: records[2],
-                disease: records[3]
+                gender: records[3],
+                dob: records[4],
+                bloodgroup: records[5],
+                allergies: records[6]
             };
         }
         catch (err) {
@@ -26,35 +28,20 @@ class RecordDetails extends Component {
         }
     }
 
-    renderCardDisplay() {
+    renderDisplay() {
         return(
-            <Card.Group>
-                <Card
-                    fluid
-                    header='Ethereum Address'
-                    description= {this.props.address}
-                />
-                <Card
-                    fluid
-                    header='Name'
-                    description= {this.props.name}
-                />
-                <Card
-                    fluid
-                    header='Age'
-                    description= {this.props.age}
-                />
-                <Card
-                    fluid
-                    header='Phone'
-                    description= {this.props.phone}
-                />
-                <Card
-                    fluid
-                    header='Disease'
-                    description= {this.props.disease}
-                />
-            </Card.Group>
+            <Segment inverted color='teal'>
+                 <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Patient Medical Record</h2>
+                <Segment>
+                    <h3>IC: {this.props.ic}</h3>
+                    <h3>Name: {this.props.name}</h3>
+                    <h3>Phone: {this.props.phone}</h3>
+                    <h3>Gender: {this.props.gender}</h3>
+                    <h3>Date of Birth: {this.props.dob}</h3>
+                    <h3>Blood Group: {this.props.bloodgroup}</h3>
+                    <h3>Allergies: {this.props.allergies}</h3>
+                </Segment>
+            </Segment>
         );
     }
 
@@ -62,7 +49,7 @@ class RecordDetails extends Component {
         return (
             <Layout>
                 <div>
-                    {this.renderCardDisplay()}
+                    {this.renderDisplay()}
                 </div>
             </Layout>
         );

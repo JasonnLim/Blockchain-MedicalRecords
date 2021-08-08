@@ -6,18 +6,18 @@ import { Link } from '../routes';
 
 export default () => {
     return (
-      <Menu>
+      <Menu size='large' inverted>
           <Link route='/'>
               <a className='item'>Home</a>
           </Link>
 
           <Menu.Menu position='right'>
-            <Link route='/'>
+            <Link route='/list'>
                 <a className='item'>Records List</a>
             </Link>
 
             <Link route='/form'>
-                <a className='item'>+</a>
+                <a className='item'>Sign Up</a>
             </Link>
           </Menu.Menu>
       </Menu>  

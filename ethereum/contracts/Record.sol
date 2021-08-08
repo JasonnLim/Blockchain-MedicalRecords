@@ -3,31 +3,42 @@ pragma solidity ^0.4.17;
 contract Record {
     
     struct Patients{
+        string ic;
         string name;
-        string age;
         string phone;
-        string diseases;
+        string gender;
+        string dob;
+        string bloodgroup;
+        string allergies;
+        address addr;
     }
     
     address public owner;
     address[] public patientList;
-    mapping (address => Patients) patients;
+    mapping(address => Patients) patients;
     mapping(address=>mapping(address=>bool)) isApproved;
+    mapping(address => bool) isPatient;
     
     function Record() public {
         owner = msg.sender;
     }
     
     //Retrieve patient details from the form and save the details
-    function setDetails(string _name, string _age, string _phone, string _diseases) public {
+    function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _allergies) public {
+        require(!isPatient[msg.sender]);
         var p = patients[msg.sender];
         
+        p.ic = _ic;
         p.name = _name;
-        p.age = _age;
         p.phone = _phone;
-        p.diseases = _diseases;
+        p.gender = _gender;
+        p.dob = _dob;
+        p.bloodgroup = _bloodgroup;
+        p.allergies = _allergies;
+        p.addr = msg.sender;
         
         patientList.push(msg.sender);
+        isPatient[msg.sender] = true;
         isApproved[msg.sender][msg.sender] = true;
     }
     
@@ -43,9 +54,12 @@ contract Record {
     }
     
     //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
-    function searchPatient(address _address) public view returns(string, string, string, string) {
+    function searchPatient(address _address) public view returns(string, string, string, string, string, string, string) {
         require(isApproved[_address][msg.sender]);
-        return (patients[_address].name, patients[_address].age, patients[_address].phone, patients[_address].diseases);
+        
+        var p = patients[_address];
+        
+        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.allergies);
     }
     
 }
