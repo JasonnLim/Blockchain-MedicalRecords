@@ -8,15 +8,22 @@ class RecordDetails extends Component {
     static async getInitialProps(props) {
         const addr = props.query.address;
         const accounts = await web3.eth.getAccounts();
-        const records = await record.methods.searchPatient(addr).call({from: accounts[0]});
+        var records;
 
-        return {
-            address: addr,
-            name: records[0],
-            age: records[1],
-            phone: records[2],
-            disease: records[3]
-        };
+        try {
+            records = await record.methods.searchPatient(addr).call({from: accounts[0]}); 
+
+            return {
+                address: addr,
+                name: records[0],
+                age: records[1],
+                phone: records[2],
+                disease: records[3]
+            };
+        }
+        catch (err) {
+            alert("You don't have permission to view this account");
+        }
     }
 
     renderCardDisplay() {

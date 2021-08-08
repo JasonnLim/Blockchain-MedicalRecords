@@ -8,7 +8,6 @@ import web3 from '../ethereum/web3';
 class RecordsList extends Component {
     static async getInitialProps() {
         const allRecords = await record.methods.getPatients().call();
-        console.log(allRecords);
 
         return { allRecords };
     }

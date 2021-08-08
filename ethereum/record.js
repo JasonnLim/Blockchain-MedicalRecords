@@ -3,7 +3,7 @@ import Record from './build/Record.json';
 
 const instance = new web3.eth.Contract(
     JSON.parse(Record.interface),
-    '0x2d9389df7243Da5823162B39a2Eb736e35B2eC9d' //Deployed Contract Code //Everytime contract code is changed, need to update this
+    '0x39769290d510C5D186C3B4dbc61b91FC39FE4078' //Deployed Contract Code //Everytime contract code is changed, need to update this
 );
 
 export default instance;
