@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Card, Button } from 'semantic-ui-react';
+import { Card, Button, Input, Form } from 'semantic-ui-react';
 import { Link } from '../routes';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import { Router } from '../routes';
 
 class RecordsList extends Component {
+    state = { search: '' };
+
     static async getInitialProps() {
         const allRecords = await record.methods.getPatients().call();
 
@@ -28,11 +31,28 @@ class RecordsList extends Component {
         return <Card.Group items={items} />;
     }
 
+    onSearch = async event => {
+        event.preventDefault(); //prevent browser from submitting form to back end server
+
+        Router.pushRoute(`/record/${this.state.search}`);
+    };
+
     render() {
         return (
             <Layout>
                 <div>
-                    <h2>Medical Records List</h2>
+                   
+                    <Form onSubmit={this.onSearch}> 
+                        <Form.Field>
+                            <Input 
+                                fluid 
+                                action={{ icon: 'search' }} 
+                                placeholder='Search...' 
+                                onChange={(event) => this.setState({ search: event.target.value })}
+                            /><br/>
+                        </Form.Field>
+                    </Form>
+                     <h2>Medical Records List</h2>
                     {this.renderRecords()}
                 </div>
             </Layout>

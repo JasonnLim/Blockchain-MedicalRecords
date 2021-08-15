@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Grid, Segment } from 'semantic-ui-react';
+import { Segment, Input } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -30,7 +30,7 @@ class RecordDetails extends Component {
 
     renderDisplay() {
         return(
-            <Segment inverted color='teal'>
+            <Segment inverted color='blue'>
                  <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Patient Medical Record</h2>
                 <Segment>
                     <h3>IC: {this.props.ic}</h3>
@@ -50,6 +50,10 @@ class RecordDetails extends Component {
             <Layout>
                 <div>
                     {this.renderDisplay()}
+                    <Segment>
+                        <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Approve Doctor</h2>
+                        <Input></Input>
+                    </Segment>
                 </div>
             </Layout>
         );

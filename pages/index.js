@@ -235,14 +235,13 @@ const HomepageLayout = () => (
             </Header>
             <p style={{ fontSize: '1.33em' }}>
               We can give your company superpowers to do things that they never thought possible.
-              Let us delight your customers and empower your needs... through pure data analytics.
+              Let us delight your customers and empower your needs... through reliable medical record systems.
             </p>
             <Header as='h3' style={{ fontSize: '2em' }}>
-              We Make Bananas That Can Dance
+              We Make Blockchain Medical Systems
             </Header>
             <p style={{ fontSize: '1.33em' }}>
-              Yes that's right, you thought it was the stuff of dreams, but even bananas can be
-              bioengineered.
+              Yes that's right, beautifully designed and easy to use medical record systems.
             </p>
           </Grid.Column>
           <Grid.Column floated='right' width={6}>
@@ -251,7 +250,7 @@ const HomepageLayout = () => (
         </Grid.Row>
         <Grid.Row>
           <Grid.Column textAlign='center'>
-            <Button size='huge'>Check Them Out</Button>
+            <Button size='huge'>Check Us Out</Button>
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -282,12 +281,11 @@ const HomepageLayout = () => (
     <Segment style={{ padding: '8em 0em' }} vertical>
       <Container text>
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Breaking The Grid, Grabs Your Attention
+          Huge Issue with Regular Medical Record Systems
         </Header>
         <p style={{ fontSize: '1.33em' }}>
-          Instead of focusing on content creation and hard work, we have learned how to master the
-          art of doing nothing by providing massive amounts of whitespace and generic content that
-          can seem massive, monolithic and worth your attention.
+          Hospital emergency department (ED) found that doctors spent 43% of their time on data entry. 
+          Only 28% of the doctors make direct patient contact. 
         </p>
         <Button as='a' size='large'>
           Read More
@@ -303,15 +301,14 @@ const HomepageLayout = () => (
         </Divider>
 
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Did We Tell You About Our Bananas?
+          Is Blockchain the best step forward for Medical Record Systems?
         </Header>
         <p style={{ fontSize: '1.33em' }}>
-          Yes I know you probably disregarded the earlier boasts as non-sequitur filler content, but
-          it's really true. It took years of gene splicing and combinatory DNA research, but our
-          bananas can really dance.
+        Blockchain technology has the potential to enable more secure, transparent, and equitable data management.
+        In addition to securely managing data, blockchain has significant advantages in distributing data access, control, and ownership to end users.
         </p>
         <Button as='a' size='large'>
-          I'm Still Quite Interested
+          View Research
         </Button>
       </Container>
     </Segment>

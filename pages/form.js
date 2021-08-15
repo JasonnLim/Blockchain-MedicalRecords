@@ -3,6 +3,7 @@ import { Form, Input, Button, Segment, Message} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import { Router } from '../routes';
 
 class PatientForm extends Component {
     state = {
@@ -31,7 +32,8 @@ class PatientForm extends Component {
                 ic, name, phone, gender, dob, bloodgroup, allergies
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");  
+            alert("Account created successfully!");
+            Router.pushRoute('/list');
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
@@ -59,7 +61,7 @@ class PatientForm extends Component {
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Name</label>
+                            <label>Full Name</label>
                             <Input
                                 placeholder = 'Eg. John Smith'                        
                                 value= {this.state.name}
