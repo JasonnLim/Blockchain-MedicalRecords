@@ -16,6 +16,10 @@ export default () => {
                 <a className='item'>Records List</a>
             </Link>
 
+            <Link route='/approve'>
+              <a className='item'>Allow Access</a>
+            </Link>
+
             <Link route='/form'>
                 <a className='item'>Sign Up</a>
             </Link>

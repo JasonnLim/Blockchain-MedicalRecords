@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Segment, Input } from 'semantic-ui-react';
+import { Segment, Input, Header, Message, Button } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import { Router } from '../routes';
 
 class RecordDetails extends Component {
+
     static async getInitialProps(props) {
         const addr = props.query.address;
         const accounts = await web3.eth.getAccounts();
@@ -25,6 +27,7 @@ class RecordDetails extends Component {
         }
         catch (err) {
             alert("You don't have permission to view this account");
+            Router.pushRoute('/list');
         }
     }
 
@@ -50,10 +53,6 @@ class RecordDetails extends Component {
             <Layout>
                 <div>
                     {this.renderDisplay()}
-                    <Segment>
-                        <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Approve Doctor</h2>
-                        <Input></Input>
-                    </Segment>
                 </div>
             </Layout>
         );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Button, Input, Form } from 'semantic-ui-react';
+import { Card, Input, Form } from 'semantic-ui-react';
 import { Link } from '../routes';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
@@ -7,7 +7,9 @@ import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
 class RecordsList extends Component {
-    state = { search: '' };
+    state = { 
+        search: '' 
+    };
 
     static async getInitialProps() {
         const allRecords = await record.methods.getPatients().call();

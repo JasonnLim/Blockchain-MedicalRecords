@@ -115,6 +115,10 @@ class DesktopContainer extends Component {
                       <a className='item'>Records List</a>
                   </Link>
 
+                  <Link route='/approve'>
+                    <a className='item'>Allow Access</a>
+                  </Link>
+
                   <Link route='/form'>
                       <a className='item'>Sign Up</a>
                   </Link>
@@ -163,11 +167,15 @@ class MobileContainer extends Component {
 
             <Menu.Menu position='right'>
               <Link route='/list'>
-                  <a className='item'>Records List</a>
+                <a className='item'>Records List</a>
+              </Link>
+
+              <Link route='/approve'>
+                <a className='item'>Allow Access</a>
               </Link>
 
               <Link route='/form'>
-                  <a className='item'>Sign Up</a>
+                <a className='item'>Sign Up</a>
               </Link>
             </Menu.Menu>
           </Sidebar>
@@ -183,15 +191,7 @@ class MobileContainer extends Component {
                 <Menu inverted pointing secondary size='large'>
                   <Menu.Item onClick={this.handleToggle}>
                     <Icon name='sidebar' />
-                  </Menu.Item>
-                  <Menu.Item position='right'>
-                    <Button as='a' inverted>
-                      Log in
-                    </Button>
-                    <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-                      Sign Up
-                    </Button>
-                  </Menu.Item>
+                  </Menu.Item>                 
                 </Menu>
               </Container>
               <HomepageHeading mobile />
@@ -281,7 +281,7 @@ const HomepageLayout = () => (
     <Segment style={{ padding: '8em 0em' }} vertical>
       <Container text>
         <Header as='h3' style={{ fontSize: '2em' }}>
-          Huge Issue with Regular Medical Record Systems
+          Major Issue with Medical Record Systems
         </Header>
         <p style={{ fontSize: '1.33em' }}>
           Hospital emergency department (ED) found that doctors spent 43% of their time on data entry. 
@@ -322,17 +322,17 @@ const HomepageLayout = () => (
               <List link inverted>
                 <List.Item as='a'>Sitemap</List.Item>
                 <List.Item as='a'>Contact Us</List.Item>
-                <List.Item as='a'>Religious Ceremonies</List.Item>
-                <List.Item as='a'>Gazebo Plans</List.Item>
+                <List.Item as='a'>Creator Info</List.Item>
+                <List.Item as='a'>Site Details</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={3}>
               <Header inverted as='h4' content='Services' />
               <List link inverted>
-                <List.Item as='a'>Banana Pre-Order</List.Item>
-                <List.Item as='a'>DNA FAQ</List.Item>
+                <List.Item as='a'>Create Blockchain System</List.Item>
+                <List.Item as='a'>Store Medical Record</List.Item>
                 <List.Item as='a'>How To Access</List.Item>
-                <List.Item as='a'>Favorite X-Men</List.Item>
+                <List.Item as='a'>Favorite Ducks</List.Item>
               </List>
             </Grid.Column>
             <Grid.Column width={7}>
