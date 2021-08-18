@@ -23,7 +23,7 @@ contract Record {
         owner = msg.sender;
     }
     
-    //Retrieve patient details from the form and save the details
+    //Retrieve patient details from user sign up and save the details into the blockchain
     function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _allergies) public {
         require(!isPatient[msg.sender]);
         var p = patients[msg.sender];
@@ -42,7 +42,22 @@ contract Record {
         isApproved[msg.sender][msg.sender] = true;
     }
     
-    //Owner must give permission to doctor only they are allowed to view records
+    //Allows user to edit their existing record
+    function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _allergies) public {
+        require(isPatient[msg.sender]);
+        var p = patients[msg.sender];
+        
+        p.ic = _ic;
+        p.name = _name;
+        p.phone = _phone;
+        p.gender = _gender;
+        p.dob = _dob;
+        p.bloodgroup = _bloodgroup;
+        p.allergies = _allergies;
+        p.addr = msg.sender;
+    }
+    
+    //Owner of the record must give permission to doctor only they are allowed to view records
     function givePermission(address _address) public returns(bool success) {
         isApproved[msg.sender][_address] = true;
         return true;
