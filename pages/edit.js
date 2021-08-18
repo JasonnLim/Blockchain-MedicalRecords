@@ -5,7 +5,7 @@ import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
-class PatientForm extends Component {
+class EditForm extends Component {
     state = {
         ic: '',
         name: '',
@@ -28,16 +28,16 @@ class PatientForm extends Component {
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.setDetails(
+            await record.methods.editDetails(
                 ic, name, phone, gender, dob, bloodgroup, allergies
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");
+            alert("Records changed successfully!");
             Router.pushRoute('/list');
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("Account already exists");
+            alert("Account does not exist");
         }
 
         this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', allergies: ''});
@@ -47,7 +47,7 @@ class PatientForm extends Component {
         return (
             <Layout>
                 <Segment>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Create New Record</h2>
+                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Edit Existing Record</h2>
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
                         <Form.Field>
@@ -126,7 +126,7 @@ class PatientForm extends Component {
                     </Form.Group>
                     <br/>
                     <Message error header="Oops!" content={this.state.errorMessage}/>
-                    <Button primary loading={this.state.loading}>Create</Button>
+                    <Button primary loading={this.state.loading}>Edit</Button>
                 </Form>
                 </Segment>
             </Layout>
@@ -134,4 +134,4 @@ class PatientForm extends Component {
     }
 }
 
-export default PatientForm;
+export default EditForm;
