@@ -20,6 +20,10 @@ export default () => {
               <a className='item'>Allow Access</a>
             </Link>
 
+            <Link route='/doctor'>
+                <a className='item'>Register Doctor</a>
+            </Link>
+
             <Link route='/edit'>
               <a className='item'>Edit Record</a>
             </Link>

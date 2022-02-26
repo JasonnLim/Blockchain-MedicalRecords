@@ -13,7 +13,7 @@ beforeEach(async () => {
 
     record = await new web3.eth.Contract(JSON.parse(compiledRecord.interface))
         .deploy({ data: compiledRecord.bytecode })
-        .send({ from: accounts[0], gas: '1000000' });
+        .send({ from: accounts[0], gas: '5000000' });
 });
 
 describe('Records', () => {
@@ -23,14 +23,14 @@ describe('Records', () => {
 
     it('can add record', async () => {
         await record.methods.setDetails(
-            'John', '22', '213134', 'Flu'
-        ).send({ from: accounts[0], gas: '1000000' });
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+        ).send({ from: accounts[0], gas: '5000000' });
     });
 
     it('can retrieve all record address', async () => {
         await record.methods.setDetails(
-            'John', '22', '213134', 'Flu'
-        ).send({ from: accounts[0], gas: '1000000' });
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+        ).send({ from: accounts[0], gas: '5000000' });
 
         const allRecords = await record.methods.getPatients().call();
 
@@ -41,8 +41,8 @@ describe('Records', () => {
 
     it('can search for a patient', async () => {
         await record.methods.setDetails(
-            'John', '22', '213134', 'Flu'
-        ).send({ from: accounts[0], gas: '1000000' });
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+        ).send({ from: accounts[0], gas: '5000000' });
         
         const owner = await record.methods.owner().call();
         console.log(owner);
@@ -54,28 +54,17 @@ describe('Records', () => {
 
     it('can create patient using multiple accounts', async () => {
         await record.methods.setDetails(
-            'John', '22', '213134', 'Flu'
-        ).send({ from: accounts[0], gas: '1000000' });
+            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+        ).send({ from: accounts[0], gas: '5000000' });
 
         await record.methods.setDetails(
-            'Josh', '23', '213134', 'Flu'
-        ).send({ from: accounts[1], gas: '1000000' });
+            '001107020345', 'Johssean', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+        ).send({ from: accounts[1], gas: '5000000' });
         
         const allRecords = await record.methods.getPatients().call();
         console.log(allRecords);
 
         console.log(accounts[0])
         console.log(accounts[1])
-    });
-
-    it('msg.sender lel', async () => {
-        const owner = await record.methods.owner().call();
-        console.log(owner);
-
-        await record.methods.setDetails(
-            'Josh', '23', '213134', 'Flu'
-        ).send({ from: accounts[1], gas: '1000000' });
-
-        assert.equal(owner, accounts[1]);
     });
 });

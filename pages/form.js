@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Segment, Message} from 'semantic-ui-react';
+import { Divider, Form, Input, Button, Segment, Message} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -48,6 +48,7 @@ class PatientForm extends Component {
             <Layout>
                 <Segment>
                 <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Create New Record</h2>
+                <Divider clearing />
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
                         <Form.Field>
@@ -117,7 +118,7 @@ class PatientForm extends Component {
                         <Form.Field>
                             <label>Allergies</label>
                             <Input 
-                                placeholder = 'Eg. Peanut Allergy Pollen Allergy'
+                                placeholder = 'Eg. Peanut Allergy, Pollen Allergy'
                                 value= {this.state.allergies}
                                 onChange= {event => 
                                     this.setState({ allergies: event.target.value })}  
