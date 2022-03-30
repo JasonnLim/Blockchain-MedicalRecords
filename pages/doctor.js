@@ -31,11 +31,11 @@ class DoctorForm extends Component {
                 ic, name, phone, gender, dob, qualification, major
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");
+            alert("Doctor account created successfully!");
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("Account already exists");
+            alert("This Doctor account already exists");
         }
 
         this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', qualification: '', major: ''});

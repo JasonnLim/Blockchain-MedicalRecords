@@ -18,7 +18,7 @@ const deploy = async () => {
     //Deploy contract to rinkeby network
     const result = await new web3.eth.Contract(JSON.parse(compiledRecord.interface))
         .deploy({ data: compiledRecord.bytecode })
-        .send({ gas: '5000000', from: accounts[0] });
+        .send({ gas: '10000000', from: accounts[0] });
 
     //Display the address of the contract 
     console.log('Contract deployed to', result.options.address);

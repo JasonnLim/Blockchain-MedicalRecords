@@ -18,6 +18,7 @@ import {
   Segment,
   Sidebar,
   Visibility,
+  Dropdown
 } from 'semantic-ui-react'
 
 const { MediaContextProvider, Media } = createMedia({
@@ -98,41 +99,84 @@ class DesktopContainer extends Component {
             style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size='large'
-            >
-              <Container>
-                <Link route='/'>
-                  <a className='item'>Home</a>
-                </Link>
+            <Menu size='large' 
+                fixed={fixed ? 'top' : null}
+                inverted={!fixed}
+                pointing={!fixed}
+                secondary={!fixed}
+                size='large'>
 
+                <Link route='/'>
+                    <a className='item'>Home</a>
+                </Link>
+      
                 <Menu.Menu position='right'>
                   <Link route='/list'>
                       <a className='item'>Records List</a>
                   </Link>
-
-                  <Link route='/approve'>
-                    <a className='item'>Allow Access</a>
-                  </Link>
-
-                  <Link route='/doctor'>
-                    <a className='item'>Register Doctor</a>
-                  </Link>
-
-                  <Link route='/edit'>
-                    <a className='item'>Edit Record</a>
-                  </Link>
-
-                  <Link route='/form'>
-                      <a className='item'>Sign Up</a>
-                  </Link>
+      
+                  <Dropdown item text='Doctor'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Link route='/list'>
+                          <a style={{color:'black'}}>View Profile</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/list'>
+                          <a style={{color:'black'}}>Edit Profile</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/appointment'>
+                          <a style={{color:'black'}}>Make Appointment</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/list'>
+                          <a style={{color:'black'}}>Update Appointment</a>
+                        </Link>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  
+                  <Dropdown item text='Patient'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Link route='/list'>
+                          <a style={{color:'black'}}>View Profile</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/edit'>
+                          <a style={{color:'black'}}>Edit Profile</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/approve'>
+                          <a style={{color:'black'}}>Allow Access</a>
+                        </Link>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+      
+                  <Dropdown item text='Register'>
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Link route='/form'>
+                          <a style={{color:'black'}}>Patient</a>
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <Link route='/doctor'>
+                          <a style={{color:'black'}}>Doctor</a>
+                        </Link>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+      
                 </Menu.Menu>
-              </Container>
-            </Menu>
+            </Menu>  
             <HomepageHeading />
           </Segment>
         </Visibility>
@@ -170,30 +214,72 @@ class MobileContainer extends Component {
             visible={sidebarOpened}
           >
             <Link route='/'>
-              <a className='item'>Home</a>
+                <a className='item'>Home</a>
             </Link>
-
-            <Menu.Menu position='right'>
+  
               <Link route='/list'>
-                <a className='item'>Records List</a>
+                  <a className='item'>Records List</a>
               </Link>
-
-              <Link route='/approve'>
-                <a className='item'>Allow Access</a>
-              </Link>
-
-              <Link route='/doctor'>
-                <a className='item'>Register Doctor</a>
-              </Link>
-
-              <Link route='/edit'>
-                <a className='item'>Edit Record</a>
-              </Link>
-
-              <Link route='/form'>
-                <a className='item'>Sign Up</a>
-              </Link>
-            </Menu.Menu>
+  
+              <Dropdown item text='Doctor'>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link route='/list'>
+                      <a style={{color:'black'}}>View Profile</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/list'>
+                      <a style={{color:'black'}}>Edit Profile</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/appointment'>
+                      <a style={{color:'black'}}>Make Appointment</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/list'>
+                      <a style={{color:'black'}}>Update Appointment</a>
+                    </Link>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              
+              <Dropdown item text='Patient'>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link route='/list'>
+                      <a style={{color:'black'}}>View Profile</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/edit'>
+                      <a style={{color:'black'}}>Edit Profile</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/approve'>
+                      <a style={{color:'black'}}>Allow Access</a>
+                    </Link>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+  
+              <Dropdown item text='Register'>
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Link route='/form'>
+                      <a style={{color:'black'}}>Patient</a>
+                    </Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <Link route='/doctor'>
+                      <a style={{color:'black'}}>Doctor</a>
+                    </Link>
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
           </Sidebar>
 
           <Sidebar.Pusher dimmed={sidebarOpened}>

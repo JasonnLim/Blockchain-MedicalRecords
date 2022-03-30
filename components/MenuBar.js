@@ -1,6 +1,7 @@
 import React from 'react';
-import { Menu, Icon } from 'semantic-ui-react';
+import { Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from '../routes';
+import { Router } from '../routes';
 
 //Header that is used in all pages
 
@@ -16,21 +17,66 @@ export default () => {
                 <a className='item'>Records List</a>
             </Link>
 
-            <Link route='/approve'>
-              <a className='item'>Allow Access</a>
-            </Link>
+            <Dropdown item text='Doctor'>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Link route='/list'>
+                    <a style={{color:'black'}}>View Profile</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/list'>
+                    <a style={{color:'black'}}>Edit Profile</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/appointment'>
+                    <a style={{color:'black'}}>Make Appointment</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/list'>
+                    <a style={{color:'black'}}>Update Appointment</a>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+            
+            <Dropdown item text='Patient'>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Link route='/list'>
+                    <a style={{color:'black'}}>View Profile</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/edit'>
+                    <a style={{color:'black'}}>Edit Profile</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/approve'>
+                    <a style={{color:'black'}}>Allow Access</a>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
 
-            <Link route='/doctor'>
-                <a className='item'>Register Doctor</a>
-            </Link>
+            <Dropdown item text='Register'>
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Link route='/form'>
+                    <a style={{color:'black'}}>Patient</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/doctor'>
+                    <a style={{color:'black'}}>Doctor</a>
+                  </Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
 
-            <Link route='/edit'>
-              <a className='item'>Edit Record</a>
-            </Link>
-
-            <Link route='/form'>
-                <a className='item'>Sign Up</a>
-            </Link>
           </Menu.Menu>
       </Menu>  
     );

@@ -37,6 +37,7 @@ contract Record {
     
     address public owner;
     address[] public patientList;
+    address[] public doctorList;
     mapping(address => Patients) patients;
     mapping(address => Doctors) doctors;
     mapping(address => Appointments) appointments;
@@ -87,10 +88,15 @@ contract Record {
         isApproved[msg.sender][_address] = true;
         return true;
     }
-    
+
     //Retrieve a list of all patients address
     function getPatients() public view returns(address[]) {
         return patientList;
+    }
+
+    //Retrieve a list of all doctors address
+    function getDoctors() public view returns(address[]) {
+        return doctorList;
     }
     
     //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
@@ -100,6 +106,13 @@ contract Record {
         var p = patients[_address];
         
         return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.allergies);
+    }
+
+    //Search appointment details by entering a patient address
+    function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string) {
+        var a = appointments[_address];
+
+        return (a.doctoraddr, a.date, a.time, a.diagnosis, a.prescription, a.description, a.status);
     }
 
     //Retrieve patient details from doctor registration page and store the details into the blockchain
@@ -116,13 +129,14 @@ contract Record {
         d.major = _major;
         d.addr = msg.sender;
         
+        doctorList.push(msg.sender);
         isDoctor[msg.sender] = true;
     }
 
     //Retrieve appointment details from appointment page and store the details into the blockchain
     function setAppointment(address _addr, string _date, string _time, string _diagnosis, string _prescription, string _description, string _status) public {
         require(isDoctor[msg.sender]);
-        var a = appointments[msg.sender];
+        var a = appointments[_addr];
         
         a.doctoraddr = msg.sender;
         a.patientaddr = _addr;

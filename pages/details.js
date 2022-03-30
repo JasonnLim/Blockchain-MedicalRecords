@@ -14,6 +14,7 @@ class RecordDetails extends Component {
 
         try {
             records = await record.methods.searchPatient(addr).call({from: accounts[0]}); 
+            appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]}); 
 
             return {
                 ic: records[0],
@@ -22,7 +23,15 @@ class RecordDetails extends Component {
                 gender: records[3],
                 dob: records[4],
                 bloodgroup: records[5],
-                allergies: records[6]
+                allergies: records[6],
+
+                doctoraddr : appointment[0],
+                date: appointment[1],
+                time: appointment[2],
+                diagnosis: appointment[3],
+                prescription: appointment[4],
+                description: appointment[5],
+                status: appointment[6]
             };
         }
         catch (err) {
@@ -33,10 +42,11 @@ class RecordDetails extends Component {
 
     renderDisplay() {
         return(
+            <div>
             <Segment inverted color='blue'>
                  <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Patient Medical Record</h2>
                 <Segment>
-                    <h3>IC: {this.props.ic}</h3>
+                    <h3>Doctor Address: {this.props.ic}</h3>
                     <h3>Name: {this.props.name}</h3>
                     <h3>Phone: {this.props.phone}</h3>
                     <h3>Gender: {this.props.gender}</h3>
@@ -45,6 +55,20 @@ class RecordDetails extends Component {
                     <h3>Allergies: {this.props.allergies}</h3>
                 </Segment>
             </Segment>
+
+            <Segment inverted color='blue'>
+                 <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Appointments</h2>
+                <Segment>
+                    <h3>IC: {this.props.doctoraddr}</h3>
+                    <h3>Name: {this.props.date}</h3>
+                    <h3>Phone: {this.props.time}</h3>
+                    <h3>Gender: {this.props.diagnosis}</h3>
+                    <h3>Date of Birth: {this.props.prescription}</h3>
+                    <h3>Blood Group: {this.props.description}</h3>
+                    <h3>Allergies: {this.props.status}</h3>
+                </Segment>
+            </Segment>
+            </div>
         );
     }
 

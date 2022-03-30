@@ -26,15 +26,15 @@ class AppointmentForm extends Component {
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.setDoctor(
+            await record.methods.setAppointment(
                 patientaddr, date, time, prescription, description, diagnosis, status
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");
+            alert("Appointment created successfully!");
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("Account already exists");
+            alert("An error has occured");
         }
 
         this.setState({ loading: false, patientaddr: '', date: '', time: '', prescription: '', description: '', diagnosis: '', status: ''});
@@ -59,63 +59,63 @@ class AppointmentForm extends Component {
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Full Name</label>
+                            <label>Date</label>
                             <Input
-                                placeholder = 'Eg. John Smith'                        
-                                value= {this.state.name}
+                                placeholder = 'Eg. 10/10/2022'                        
+                                value= {this.state.date}
                                 onChange= {event => 
-                                    this.setState({ name: event.target.value })}                           
+                                    this.setState({ date: event.target.value })}                           
                             />
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Phone</label>
+                            <label>Time</label>
                             <Input
-                                placeholder = 'Eg. 0123456789'
-                                value= {this.state.phone}
+                                placeholder = 'Eg. 11:50pm'
+                                value= {this.state.time}
                                 onChange= {event => 
-                                    this.setState({ phone: event.target.value })}  
+                                    this.setState({ time: event.target.value })}  
                             />
                         </Form.Field>
                     </Form.Group>
                     <br/>              
                     <Form.Group widths='equal'>
                         <Form.Field>
-                            <label>Gender</label>
+                            <label>Prescription</label>
                             <Input 
-                                placeholder = 'Eg. Male'
-                                value= {this.state.gender}
+                                placeholder = 'Eg. Amoxicillin 500mg'
+                                value= {this.state.prescription}
                                 onChange= {event => 
-                                    this.setState({ gender: event.target.value })}  
+                                    this.setState({ prescription: event.target.value })}  
                             />
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Date of Birth</label>
+                            <label>Description</label>
                             <Input 
-                                placeholder = 'Eg. 01/01/1997'
-                                value= {this.state.dob}
+                                placeholder = 'Eg. Still requires further observation'
+                                value= {this.state.description}
                                 onChange= {event => 
-                                    this.setState({ dob: event.target.value })}  
+                                    this.setState({ description: event.target.value })}  
                             />
                         </Form.Field>
                     </Form.Group>                   
                     <br/>
                     <Form.Group widths='equal'>
                         <Form.Field>
-                            <label>Highest Qualification</label>
+                            <label>Diagnosis</label>
                             <Input 
-                                placeholder = 'Eg. Doctoral Degree'
-                                value= {this.state.qualification}
+                                placeholder = 'Eg. Skin Infection'
+                                value= {this.state.diagnosis}
                                 onChange= {event => 
-                                    this.setState({ qualification: event.target.value })}  
+                                    this.setState({ diagnosis: event.target.value })}  
                             />
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Major</label>
+                            <label>Status</label>
                             <Input 
-                                placeholder = 'Eg. Biology'
+                                placeholder = 'Eg. Pending/Complete'
                                 value= {this.state.major}
                                 onChange= {event => 
                                     this.setState({ major: event.target.value })}  
