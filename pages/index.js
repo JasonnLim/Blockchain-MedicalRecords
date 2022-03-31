@@ -103,8 +103,7 @@ class DesktopContainer extends Component {
                 fixed={fixed ? 'top' : null}
                 inverted={!fixed}
                 pointing={!fixed}
-                secondary={!fixed}
-                size='large'>
+                secondary={!fixed}>
 
                 <Link route='/'>
                     <a className='item'>Home</a>

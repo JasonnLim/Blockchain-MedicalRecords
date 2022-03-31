@@ -67,4 +67,23 @@ describe('Records', () => {
         console.log(accounts[0])
         console.log(accounts[1])
     });
+
+    it('can create appointment using doctor account', async () => {
+        await record.methods.setDetails(
+            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','Doctorate', 'Virology'
+        ).send({ from: accounts[0], gas: '5000000' });
+
+        await record.methods.setDoctor(
+            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','Doctorate', 'Virology'
+        ).send({ from: accounts[1], gas: '5000000' });
+
+        await record.methods.setAppointment(
+            accounts[0], '07/07/2022', '11:50pm', 'Amoxicillin', 'Requires observation','Skin Infection', 'Pending'
+        ).send({ from: accounts[1], gas: '5000000' });
+        
+        var appointment = await record.methods.searchAppointment(accounts[0]).call({from: accounts[1]}); 
+
+        console.log(appointment[0])
+        console.log(appointment[6])
+    });
 });

@@ -11,10 +11,11 @@ class RecordDetails extends Component {
         const addr = props.query.address;
         const accounts = await web3.eth.getAccounts();
         var records;
+        var appointment;
 
         try {
-            records = await record.methods.searchPatient(addr).call({from: accounts[0]}); 
-            appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]}); 
+            records = await record.methods.searchPatient(addr).call({from: accounts[0]});
+            appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]});  
 
             return {
                 ic: records[0],
@@ -59,13 +60,13 @@ class RecordDetails extends Component {
             <Segment inverted color='blue'>
                  <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Appointments</h2>
                 <Segment>
-                    <h3>IC: {this.props.doctoraddr}</h3>
-                    <h3>Name: {this.props.date}</h3>
-                    <h3>Phone: {this.props.time}</h3>
-                    <h3>Gender: {this.props.diagnosis}</h3>
-                    <h3>Date of Birth: {this.props.prescription}</h3>
-                    <h3>Blood Group: {this.props.description}</h3>
-                    <h3>Allergies: {this.props.status}</h3>
+                    <h3>Doctor Address: {this.props.doctoraddr}</h3>
+                    <h3>Date: {this.props.date}</h3>
+                    <h3>Time: {this.props.time}</h3>
+                    <h3>Diagnosis: {this.props.diagnosis}</h3>
+                    <h3>Prescription: {this.props.prescription}</h3>
+                    <h3>Description: {this.props.description}</h3>
+                    <h3>Status: {this.props.status}</h3>
                 </Segment>
             </Segment>
             </div>
