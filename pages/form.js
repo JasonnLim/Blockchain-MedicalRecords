@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
-import { Divider, Form, Input, Button, Segment, Message} from 'semantic-ui-react';
+import { Divider, Form, Input, Button, Segment, Message, Select} from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+
+const options = [
+    { key: 'm', text: 'Male', value: 'Male' },
+    { key: 'f', text: 'Female', value: 'Female' },
+    { key: 'o', text: 'Other', value: 'Other' },
+  ]
 
 class PatientForm extends Component {
     state = {
@@ -17,6 +23,8 @@ class PatientForm extends Component {
         loading: false,
         errorMessage: ''
     };
+
+    handleGender = (e, { value }) => this.setState({ gender: value })
 
     onSubmit = async event => {
         event.preventDefault();
@@ -54,6 +62,7 @@ class PatientForm extends Component {
                         <Form.Field>
                             <label>IC</label>
                             <Input
+                                error={{ content: 'Please enter your IC', pointing: 'below' }}
                                 placeholder = 'Eg. 001234010234'                
                                 value= {this.state.ic}
                                 onChange= {event => 
@@ -83,15 +92,12 @@ class PatientForm extends Component {
                     </Form.Group>
                     <br/>              
                     <Form.Group widths='equal'>
-                        <Form.Field>
-                            <label>Gender</label>
-                            <Input 
-                                placeholder = 'Eg. Male'
-                                value= {this.state.gender}
-                                onChange= {event => 
-                                    this.setState({ gender: event.target.value })}  
-                            />
-                        </Form.Field>
+                        <Form.Field 
+                                label='Gender' 
+                                control={Select} 
+                                options={options} 
+                                onChange={this.handleGender}
+                        />
 
                         <Form.Field>
                             <label>Date of Birth</label>

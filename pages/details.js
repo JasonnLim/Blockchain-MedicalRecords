@@ -16,7 +16,7 @@ class RecordDetails extends Component {
         try {
             records = await record.methods.searchPatient(addr).call({from: accounts[0]});
             appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]});  
-
+            
             return {
                 ic: records[0],
                 name: records[1],

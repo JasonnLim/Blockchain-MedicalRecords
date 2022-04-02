@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-import { Divider, Form, Input, Button, Segment, Message} from 'semantic-ui-react';
+import { Divider, Form, Input, Button, Segment, Message, Select } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+
+const statusOptions = [
+    { key: 'p', text: 'Pending', value: 'Pending' },
+    { key: 'c', text: 'Complete', value: 'Complete' }
+  ]
 
 class AppointmentForm extends Component {
     state = {
@@ -15,6 +20,8 @@ class AppointmentForm extends Component {
         status: '',
         errorMessage: ''
     };
+
+    handleStatus = (e, { value }) => this.setState({ status: value })
 
     onSubmit = async event => {
         event.preventDefault();
@@ -112,15 +119,12 @@ class AppointmentForm extends Component {
                             />
                         </Form.Field>
 
-                        <Form.Field>
-                            <label>Status</label>
-                            <Input 
-                                placeholder = 'Eg. Pending/Complete'
-                                value= {this.state.major}
-                                onChange= {event => 
-                                    this.setState({ major: event.target.value })}  
-                            />
-                        </Form.Field>
+                        <Form.Field 
+                            label='Status' 
+                            control={Select} 
+                            options={statusOptions} 
+                            onChange={this.handleStatus}
+                        />
                     </Form.Group>
                     <br/>
                     <Message error header="Oops!" content={this.state.errorMessage}/>
