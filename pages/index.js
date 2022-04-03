@@ -58,7 +58,7 @@ const HomepageHeading = ({ mobile }) => (
       }}
     />
     <Button primary size='huge' inverted>
-      <Link route='/form'>
+      <Link route='/dashboard'>
         <a className='item'>Get Started</a>
       </Link>
       <Icon name='right arrow' />
@@ -110,6 +110,10 @@ class DesktopContainer extends Component {
                 </Link>
       
                 <Menu.Menu position='right'>
+                  <Link route='/dashboard'>
+                      <a className='item'>Dashboard</a>
+                  </Link>
+
                   <Link route='/list'>
                       <a className='item'>Records List</a>
                   </Link>
@@ -132,7 +136,7 @@ class DesktopContainer extends Component {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link route='/list'>
+                        <Link route='/edit-appointment'>
                           <a style={{color:'black'}}>Update Appointment</a>
                         </Link>
                       </Dropdown.Item>
@@ -147,12 +151,12 @@ class DesktopContainer extends Component {
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link route='/edit'>
+                        <Link route='/edit-patient'>
                           <a style={{color:'black'}}>Edit Profile</a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link route='/approve'>
+                        <Link route='/approve-doctor'>
                           <a style={{color:'black'}}>Allow Access</a>
                         </Link>
                       </Dropdown.Item>
@@ -162,12 +166,12 @@ class DesktopContainer extends Component {
                   <Dropdown item text='Register'>
                     <Dropdown.Menu>
                       <Dropdown.Item>
-                        <Link route='/form'>
+                        <Link route='/register-patient'>
                           <a style={{color:'black'}}>Patient</a>
                         </Link>
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link route='/doctor'>
+                        <Link route='/register-doctor'>
                           <a style={{color:'black'}}>Doctor</a>
                         </Link>
                       </Dropdown.Item>
@@ -215,10 +219,14 @@ class MobileContainer extends Component {
             <Link route='/'>
                 <a className='item'>Home</a>
             </Link>
+
+            <Link route='/dashboard'>
+                <a className='item'>Dashboard</a>
+            </Link>
   
-              <Link route='/list'>
-                  <a className='item'>Records List</a>
-              </Link>
+            <Link route='/list'>
+                <a className='item'>Records List</a>
+            </Link>
   
               <Dropdown item text='Doctor'>
                 <Dropdown.Menu>
@@ -233,12 +241,12 @@ class MobileContainer extends Component {
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/appointment'>
+                    <Link route='/make-appointment'>
                       <a style={{color:'black'}}>Make Appointment</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/list'>
+                    <Link route='/edit-appointment'>
                       <a style={{color:'black'}}>Update Appointment</a>
                     </Link>
                   </Dropdown.Item>
@@ -253,12 +261,12 @@ class MobileContainer extends Component {
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/edit'>
+                    <Link route='/edit-patient'>
                       <a style={{color:'black'}}>Edit Profile</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/approve'>
+                    <Link route='/approve-doctor'>
                       <a style={{color:'black'}}>Allow Access</a>
                     </Link>
                   </Dropdown.Item>
@@ -268,12 +276,12 @@ class MobileContainer extends Component {
               <Dropdown item text='Register'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link route='/form'>
+                    <Link route='/register-patient'>
                       <a style={{color:'black'}}>Patient</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/doctor'>
+                    <Link route='/register-doctor'>
                       <a style={{color:'black'}}>Doctor</a>
                     </Link>
                   </Dropdown.Item>

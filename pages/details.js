@@ -56,7 +56,7 @@ class RecordDetails extends Component {
                     <h3>Allergies: {this.props.allergies}</h3>
                 </Segment>
             </Segment>
-
+            
             <Segment inverted color='blue'>
                  <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Appointments</h2>
                 <Segment>

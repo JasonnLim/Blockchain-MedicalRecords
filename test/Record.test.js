@@ -86,4 +86,13 @@ describe('Records', () => {
         console.log(appointment[0])
         console.log(appointment[6])
     });
+    
+    it('can count number of records created by patient', async () => {
+        await record.methods.setDetails(
+            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','Doctorate', 'Virology'
+        ).send({ from: accounts[0], gas: '5000000' });
+        
+        const patientCount = await record.methods.getPatientCount().call();
+        assert.equal(patientCount, 1);
+    });
 });

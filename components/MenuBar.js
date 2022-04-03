@@ -13,6 +13,10 @@ export default () => {
           </Link>
 
           <Menu.Menu position='right'>
+            <Link route='/dashboard'>
+                <a className='item'>Dashboard</a>
+            </Link>
+
             <Link route='/list'>
                 <a className='item'>Records List</a>
             </Link>

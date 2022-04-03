@@ -38,12 +38,18 @@ contract Record {
     address public owner;
     address[] public patientList;
     address[] public doctorList;
+
     mapping(address => Patients) patients;
     mapping(address => Doctors) doctors;
     mapping(address => Appointments) appointments;
+
     mapping(address=>mapping(address=>bool)) isApproved;
     mapping(address => bool) isPatient;
     mapping(address => bool) isDoctor;
+
+    uint256 public patientCount = 0;
+    uint256 public doctorCount = 0;
+    uint256 public appointmentCount = 0;
     
     function Record() public {
         owner = msg.sender;
@@ -66,6 +72,7 @@ contract Record {
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
         isApproved[msg.sender][msg.sender] = true;
+        patientCount++;
     }
     
     //Allows user to edit their existing record
@@ -131,6 +138,7 @@ contract Record {
         
         doctorList.push(msg.sender);
         isDoctor[msg.sender] = true;
+        doctorCount++;
     }
 
     //Retrieve appointment details from appointment page and store the details into the blockchain
@@ -146,6 +154,8 @@ contract Record {
         a.prescription = _prescription; 
         a.description = _description;
         a.status = _status;
+
+        appointmentCount++;
     }
     
     //Retrieve appointment details from appointment page and store the details into the blockchain
@@ -162,5 +172,19 @@ contract Record {
         a.description = _description;
         a.status = _status;
     }
-    
+
+    //Retrieve patient count
+    function getPatientCount() public view returns(uint256) {
+        return patientCount;
+    }
+
+    //Retrieve doctor count
+    function getDoctorCount() public view returns(uint256) {
+        return doctorCount;
+    }
+
+    //Retrieve appointment count
+    function getAppointmentCount() public view returns(uint256) {
+        return appointmentCount;
+    }
 }
