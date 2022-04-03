@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Divider, Form, Input, Button, Segment, Message, Select} from 'semantic-ui-react';
+import { Divider, Form, Input, Button, Segment, Message, Select } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -9,9 +9,9 @@ const options = [
     { key: 'm', text: 'Male', value: 'Male' },
     { key: 'f', text: 'Female', value: 'Female' },
     { key: 'o', text: 'Other', value: 'Other' },
-  ]
+]
 
-class PatientForm extends Component {
+class EditPatient extends Component {
     state = {
         ic: '',
         name: '',
@@ -36,16 +36,16 @@ class PatientForm extends Component {
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.setDetails(
+            await record.methods.editDetails(
                 ic, name, phone, gender, dob, bloodgroup, allergies
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");
+            alert("Records changed successfully!");
             Router.pushRoute('/list');
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("Account already exists");
+            alert("Account does not exist");
         }
 
         this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', allergies: ''});
@@ -55,14 +55,13 @@ class PatientForm extends Component {
         return (
             <Layout>
                 <Segment>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Create New Record</h2>
+                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Edit Existing Record</h2>
                 <Divider clearing />
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
                         <Form.Field>
                             <label>IC</label>
                             <Input
-                                error={{ content: 'Please enter your IC', pointing: 'below' }}
                                 placeholder = 'Eg. 001234010234'                
                                 value= {this.state.ic}
                                 onChange= {event => 
@@ -93,10 +92,10 @@ class PatientForm extends Component {
                     <br/>              
                     <Form.Group widths='equal'>
                         <Form.Field 
-                                label='Gender' 
-                                control={Select} 
-                                options={options} 
-                                onChange={this.handleGender}
+                            label='Gender' 
+                            control={Select} 
+                            options={options} 
+                            onChange={this.handleGender}
                         />
 
                         <Form.Field>
@@ -133,7 +132,7 @@ class PatientForm extends Component {
                     </Form.Group>
                     <br/>
                     <Message error header="Oops!" content={this.state.errorMessage}/>
-                    <Button primary loading={this.state.loading}>Create</Button>
+                    <Button primary loading={this.state.loading}>Edit</Button>
                 </Form>
                 </Segment>
             </Layout>
@@ -141,4 +140,4 @@ class PatientForm extends Component {
     }
 }
 
-export default PatientForm;
+export default EditPatient;

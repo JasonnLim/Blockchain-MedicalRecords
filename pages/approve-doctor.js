@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 
-class approve extends Component {
+class ApproveDoctor extends Component {
     state = {
         doctorAddr: '',
         loading: '',
@@ -56,4 +56,4 @@ class approve extends Component {
     }
 }
 
-export default approve;
+export default ApproveDoctor;

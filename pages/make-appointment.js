@@ -9,7 +9,7 @@ const statusOptions = [
     { key: 'c', text: 'Complete', value: 'Complete' }
   ]
 
-class AppointmentForm extends Component {
+class MakeAppointment extends Component {
     state = {
         patientaddr: '',
         date: '',
@@ -136,4 +136,4 @@ class AppointmentForm extends Component {
     }
 }
 
-export default AppointmentForm;
+export default MakeAppointment;
