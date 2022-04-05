@@ -19,7 +19,7 @@ class RegisterPatient extends Component {
         gender: '',
         dob: '',
         bloodgroup: '',
-        allergies: '',
+        medication: '',
         loading: false,
         errorMessage: ''
     };
@@ -29,7 +29,7 @@ class RegisterPatient extends Component {
     onSubmit = async event => {
         event.preventDefault();
 
-        const { ic, name, phone, gender, dob, bloodgroup, allergies } = this.state;
+        const { ic, name, phone, gender, dob, bloodgroup, medication } = this.state;
 
         this.setState({loading: true, errorMessage: ''});
 
@@ -37,7 +37,7 @@ class RegisterPatient extends Component {
             const accounts = await web3.eth.getAccounts();
 
             await record.methods.setDetails(
-                ic, name, phone, gender, dob, bloodgroup, allergies
+                ic, name, phone, gender, dob, bloodgroup, medication
             ).send({ from: accounts[0] });
 
             alert("Account created successfully!");
@@ -48,7 +48,7 @@ class RegisterPatient extends Component {
             alert("Account already exists");
         }
 
-        this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', allergies: ''});
+        this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', medication: ''});
     }
 
     render() {
@@ -121,12 +121,12 @@ class RegisterPatient extends Component {
                         </Form.Field>
 
                         <Form.Field>
-                            <label>Allergies</label>
+                            <label>Current Medications</label>
                             <Input 
-                                placeholder = 'Eg. Peanut Allergy, Pollen Allergy'
-                                value= {this.state.allergies}
+                                placeholder = 'Eg. Antidepressants'
+                                value= {this.state.medication}
                                 onChange= {event => 
-                                    this.setState({ allergies: event.target.value })}  
+                                    this.setState({ medication: event.target.value })}  
                             />
                         </Form.Field>
                     </Form.Group>

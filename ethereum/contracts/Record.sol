@@ -9,8 +9,9 @@ contract Record {
         string gender;
         string dob;
         string bloodgroup;
-        string allergies;
+        string medication;
         address addr;
+        uint date;
     }
 
     struct Doctors{
@@ -50,13 +51,14 @@ contract Record {
     uint256 public patientCount = 0;
     uint256 public doctorCount = 0;
     uint256 public appointmentCount = 0;
+    uint256 public permissionGrantedCount = 0;
     
     function Record() public {
         owner = msg.sender;
     }
     
     //Retrieve patient details from user sign up page and store the details into the blockchain
-    function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _allergies) public {
+    function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _medication) public {
         require(!isPatient[msg.sender]);
         var p = patients[msg.sender];
         
@@ -66,8 +68,9 @@ contract Record {
         p.gender = _gender;
         p.dob = _dob;
         p.bloodgroup = _bloodgroup;
-        p.allergies = _allergies;
+        p.medication = _medication;
         p.addr = msg.sender;
+        p.date = block.timestamp;
         
         patientList.push(msg.sender);
         isPatient[msg.sender] = true;
@@ -76,7 +79,7 @@ contract Record {
     }
     
     //Allows user to edit their existing record
-    function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _allergies) public {
+    function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _medication) public {
         require(isPatient[msg.sender]);
         var p = patients[msg.sender];
         
@@ -86,13 +89,14 @@ contract Record {
         p.gender = _gender;
         p.dob = _dob;
         p.bloodgroup = _bloodgroup;
-        p.allergies = _allergies;
-        p.addr = msg.sender;
+        p.medication = _medication;
+        p.addr = msg.sender;    
     }
     
     //Owner of the record must give permission to doctor only they are allowed to view records
     function givePermission(address _address) public returns(bool success) {
         isApproved[msg.sender][_address] = true;
+        permissionGrantedCount++;
         return true;
     }
 
@@ -112,7 +116,14 @@ contract Record {
         
         var p = patients[_address];
         
-        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.allergies);
+        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.medication);
+    }
+
+    //Search patient record creation date by entering a patient address
+    function searchRecordDate(address _address) public view returns(uint) {
+        var p = patients[_address];
+        
+        return (p.date);
     }
 
     //Search appointment details by entering a patient address
@@ -186,5 +197,10 @@ contract Record {
     //Retrieve appointment count
     function getAppointmentCount() public view returns(uint256) {
         return appointmentCount;
+    }
+
+    //Retrieve permission granted count
+    function getPermissionGrantedCount() public view returns(uint256) {
+        return permissionGrantedCount;
     }
 }

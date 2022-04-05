@@ -24,7 +24,7 @@ class RecordDetails extends Component {
                 gender: records[3],
                 dob: records[4],
                 bloodgroup: records[5],
-                allergies: records[6],
+                medication: records[6],
 
                 doctoraddr : appointment[0],
                 date: appointment[1],
@@ -53,7 +53,7 @@ class RecordDetails extends Component {
                     <h3>Gender: {this.props.gender}</h3>
                     <h3>Date of Birth: {this.props.dob}</h3>
                     <h3>Blood Group: {this.props.bloodgroup}</h3>
-                    <h3>Allergies: {this.props.allergies}</h3>
+                    <h3>Current Medications: {this.props.medication}</h3>
                 </Segment>
             </Segment>
             
