@@ -23,6 +23,7 @@ contract Record {
         string qualification;
         string major;
         address addr;
+        uint date;
     }
 
     struct Appointments{
@@ -126,6 +127,13 @@ contract Record {
         return (p.date);
     }
 
+    //Search doctor profile creation date by entering a patient address
+    function searchDoctorDate(address _address) public view returns(uint) {
+        var d = doctors[_address];
+        
+        return (d.date);
+    }
+
     //Search appointment details by entering a patient address
     function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string) {
         var a = appointments[_address];
@@ -146,6 +154,7 @@ contract Record {
         d.qualification = _qualification;
         d.major = _major;
         d.addr = msg.sender;
+        d.date = block.timestamp;
         
         doctorList.push(msg.sender);
         isDoctor[msg.sender] = true;

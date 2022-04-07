@@ -7,26 +7,6 @@ import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
-/*
-const data = [
-    {
-      name: 'January',
-      count: 2400,
-    },
-    {
-      name: 'February',
-      count: 2210,
-    },
-    {
-      name: 'March',
-      count: 2290,
-    },
-    {
-      name: 'April',
-      count: 2290,
-    },
-  ];
-  */
   var data = [];
 
   const monthName = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -50,58 +30,80 @@ export default class Dashboard extends PureComponent {
             dict[month] = (dict[month] || 0) + 1;
         }
 
+        const allDoctors = await record.methods.getDoctors().call();
+        var docdict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
+        
+        for(let i = 0; i < allDoctors.length; i++){
+            var addr = allDoctors[i]
+            var unixDate = await record.methods.searchDoctorDate(addr).call({from: accounts[0]});
+            var month = monthName[new Date(unixDate * 1000).getMonth()];
+            docdict[month] = (docdict[month] || 0) + 1;
+        }
+
         data = [
             {
               Name: Object.entries(dict)[0][0],
-              Count: Object.entries(dict)[0][1],
+              Patients: Object.entries(dict)[0][1],
+              Doctors: Object.entries(docdict)[0][1],
             },
             {
               Name: Object.entries(dict)[1][0],
-              Count: Object.entries(dict)[1][1],
+              Patients: Object.entries(dict)[1][1],
+              Doctors: Object.entries(docdict)[1][1],
             },
             {
               Name: Object.entries(dict)[2][0],
-              Count: Object.entries(dict)[2][1],
+              Patients: Object.entries(dict)[2][1],
+              Doctors: Object.entries(docdict)[2][1],
             },
             {
               Name: Object.entries(dict)[3][0],
-              Count: Object.entries(dict)[3][1],
+              Patients: Object.entries(dict)[3][1],
+              Doctors: Object.entries(docdict)[3][1],
             },
             {
               Name: Object.entries(dict)[4][0],
-              Count: Object.entries(dict)[4][1],
+              Patients: Object.entries(dict)[4][1],
+              Doctors: Object.entries(docdict)[4][1],
             },
             {
               Name: Object.entries(dict)[5][0],
-              Count: Object.entries(dict)[5][1],
+              Patients: Object.entries(dict)[5][1],
+              Doctors: Object.entries(docdict)[5][1],
             },
             {
               Name: Object.entries(dict)[6][0],
-              Count: Object.entries(dict)[6][1],
+              Patients: Object.entries(dict)[6][1],
+              Doctors: Object.entries(docdict)[6][1],
             },
             {
               Name: Object.entries(dict)[7][0],
-              Count: Object.entries(dict)[7][1],
+              Patients: Object.entries(dict)[7][1],
+              Doctors: Object.entries(docdict)[7][1],
             },
             {
               Name: Object.entries(dict)[8][0],
               Count: Object.entries(dict)[8][1],
+              Doctors: Object.entries(docdict)[8][1],
             },
             {
               Name: Object.entries(dict)[9][0],
               Count: Object.entries(dict)[9][1],
+              Doctors: Object.entries(docdict)[9][1],
             },
             {
               Name: Object.entries(dict)[10][0],
               Count: Object.entries(dict)[10][1],
+              Doctors: Object.entries(docdict)[10][1],
             },
             {
               Name: Object.entries(dict)[11][0],
               Count: Object.entries(dict)[11][1],
+              Doctors: Object.entries(docdict)[11][1],
             },
         ];
 
-        return { patientCount, doctorCount, appointmentCount, permissionGrantedCount, data};
+        return { patientCount, doctorCount, appointmentCount, permissionGrantedCount, data };
     }
 
     render() {
@@ -174,7 +176,7 @@ export default class Dashboard extends PureComponent {
                     </Card>
                 </Card.Group>
 
-                <h3 style={{textAlign: "center"}}>Number of Patient Records in 2022</h3>
+                <h3 style={{textAlign: "center"}}>Number of Patients vs Doctors in 2022</h3>
                 <ResponsiveContainer width="100%" aspect={3}>
                     <LineChart
                     width={500}
@@ -192,7 +194,8 @@ export default class Dashboard extends PureComponent {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="Count" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="Patients" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    <Line type="monotone" dataKey="Doctors" stroke="#82ca9d" />
                     </LineChart>
                 </ResponsiveContainer>
                 </>
