@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Menu, Icon, Dropdown } from 'semantic-ui-react';
+import record from '../ethereum/record';
+import web3 from '../ethereum/web3';
 import { Link } from '../routes';
 import { Router } from '../routes';
 
 //Header that is used in all pages
 
-export default () => {
+export default class MenuBar extends Component {
+
+  onClicked = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/record/${accounts[0]}`);
+  }
+
+  render() {
     return (
       <Menu size='large' inverted>
           <Link route='/'>
@@ -49,8 +59,8 @@ export default () => {
             <Dropdown item text='Patient'>
               <Dropdown.Menu>
                 <Dropdown.Item>
-                  <Link route='/list'>
-                    <a style={{color:'black'}}>View Profile</a>
+                  <Link route='/'>
+                    <a style={{color:'black'}} onClick={this.onClicked}>View Profile</a>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
@@ -84,4 +94,5 @@ export default () => {
           </Menu.Menu>
       </Menu>  
     );
-};
+  }
+}

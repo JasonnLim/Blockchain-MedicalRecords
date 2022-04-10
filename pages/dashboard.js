@@ -70,15 +70,16 @@ export default class Dashboard extends PureComponent {
         });
     };
 
-    static async getInitialProps() {
+    static async getInitialProps() {  
+        const accounts = await web3.eth.getAccounts();
+        const allPatients = await record.methods.getPatients().call();
+        const allDoctors = await record.methods.getDoctors().call();
+
         var patientCount = await record.methods.getPatientCount().call();
         var doctorCount = await record.methods.getDoctorCount().call();
         var appointmentCount = await record.methods.getAppointmentCount().call();
         var permissionGrantedCount = await record.methods.getPermissionGrantedCount().call();
 
-        const accounts = await web3.eth.getAccounts();
-        const allPatients = await record.methods.getPatients().call();
-        const allDoctors = await record.methods.getDoctors().call();
         var dict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
         var docdict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
         var addrDict = {};
