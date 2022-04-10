@@ -48,6 +48,7 @@ contract Record {
     mapping(address=>mapping(address=>bool)) isApproved;
     mapping(address => bool) isPatient;
     mapping(address => bool) isDoctor;
+    mapping(address => uint) AppointmentPerPatient;
 
     uint256 public patientCount = 0;
     uint256 public doctorCount = 0;
@@ -176,6 +177,7 @@ contract Record {
         a.status = _status;
 
         appointmentCount++;
+        AppointmentPerPatient[_addr]++;
     }
     
     //Retrieve appointment details from appointment page and store the details into the blockchain
@@ -211,5 +213,10 @@ contract Record {
     //Retrieve permission granted count
     function getPermissionGrantedCount() public view returns(uint256) {
         return permissionGrantedCount;
+    }
+
+    //Retrieve permission granted count
+    function getAppointmentPerPatient(address _address) public view returns(uint256) {
+        return AppointmentPerPatient[_address];
     }
 }
