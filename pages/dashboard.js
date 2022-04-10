@@ -101,7 +101,13 @@ export default class Dashboard extends PureComponent {
         for(let i = 0; i < allPatients.length; i++){
             var addr = allPatients[i]
             var count = await record.methods.getAppointmentPerPatient(addr).call({from: accounts[0]});
-            addrDict[addr] = count;
+
+            if(addr == 0 && addr == null){
+                pieData[i] = {'0': 0}
+            }
+
+            //Dynamically render piechart data
+            pieData[i] = {'Name': addr, 'Count': parseInt(count)};
         }
 
         data = [
@@ -164,17 +170,6 @@ export default class Dashboard extends PureComponent {
               Name: Object.entries(dict)[11][0],
               Patients: Object.entries(dict)[11][1],
               Doctors: Object.entries(docdict)[11][1],
-            },
-        ];
-
-        pieData = [
-            {
-                Name: Object.entries(addrDict)[0][0],
-                Count: parseInt(Object.entries(addrDict)[0][1]),
-            },
-            {
-                Name: Object.entries(addrDict)[1][0],
-                Count: parseInt(Object.entries(addrDict)[1][1]),
             },
         ];
 

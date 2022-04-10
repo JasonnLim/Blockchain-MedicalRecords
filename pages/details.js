@@ -47,7 +47,7 @@ class RecordDetails extends Component {
             <Segment inverted color='blue'>
                  <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Patient Medical Record</h2>
                 <Segment>
-                    <h3>Doctor Address: {this.props.ic}</h3>
+                    <h3>IC: {this.props.ic}</h3>
                     <h3>Name: {this.props.name}</h3>
                     <h3>Phone: {this.props.phone}</h3>
                     <h3>Gender: {this.props.gender}</h3>

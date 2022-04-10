@@ -80,7 +80,7 @@ contract Record {
         patientCount++;
     }
     
-    //Allows user to edit their existing record
+    //Allows patient to edit their existing record
     function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _medication) public {
         require(isPatient[msg.sender]);
         var p = patients[msg.sender];
@@ -93,53 +93,6 @@ contract Record {
         p.bloodgroup = _bloodgroup;
         p.medication = _medication;
         p.addr = msg.sender;    
-    }
-    
-    //Owner of the record must give permission to doctor only they are allowed to view records
-    function givePermission(address _address) public returns(bool success) {
-        isApproved[msg.sender][_address] = true;
-        permissionGrantedCount++;
-        return true;
-    }
-
-    //Retrieve a list of all patients address
-    function getPatients() public view returns(address[]) {
-        return patientList;
-    }
-
-    //Retrieve a list of all doctors address
-    function getDoctors() public view returns(address[]) {
-        return doctorList;
-    }
-    
-    //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
-    function searchPatient(address _address) public view returns(string, string, string, string, string, string, string) {
-        require(isApproved[_address][msg.sender]);
-        
-        var p = patients[_address];
-        
-        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.medication);
-    }
-
-    //Search patient record creation date by entering a patient address
-    function searchRecordDate(address _address) public view returns(uint) {
-        var p = patients[_address];
-        
-        return (p.date);
-    }
-
-    //Search doctor profile creation date by entering a patient address
-    function searchDoctorDate(address _address) public view returns(uint) {
-        var d = doctors[_address];
-        
-        return (d.date);
-    }
-
-    //Search appointment details by entering a patient address
-    function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string) {
-        var a = appointments[_address];
-
-        return (a.doctoraddr, a.date, a.time, a.diagnosis, a.prescription, a.description, a.status);
     }
 
     //Retrieve patient details from doctor registration page and store the details into the blockchain
@@ -160,6 +113,21 @@ contract Record {
         doctorList.push(msg.sender);
         isDoctor[msg.sender] = true;
         doctorCount++;
+    }
+
+    //Allows doctors to edit their existing profile
+    function editDoctor(string _ic, string _name, string _phone, string _gender, string _dob, string _qualification, string _major) public {
+        require(isDoctor[msg.sender]);
+        var d = doctors[msg.sender];
+        
+        d.ic = _ic;
+        d.name = _name;
+        d.phone = _phone;
+        d.gender = _gender;
+        d.dob = _dob;
+        d.qualification = _qualification;
+        d.major = _major;
+        d.addr = msg.sender;
     }
 
     //Retrieve appointment details from appointment page and store the details into the blockchain
@@ -193,6 +161,62 @@ contract Record {
         a.prescription = _prescription; 
         a.description = _description;
         a.status = _status;
+    }
+    
+    //Owner of the record must give permission to doctor only they are allowed to view records
+    function givePermission(address _address) public returns(bool success) {
+        isApproved[msg.sender][_address] = true;
+        permissionGrantedCount++;
+        return true;
+    }
+
+    //Retrieve a list of all patients address
+    function getPatients() public view returns(address[]) {
+        return patientList;
+    }
+
+    //Retrieve a list of all doctors address
+    function getDoctors() public view returns(address[]) {
+        return doctorList;
+    }
+    
+    //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
+    function searchPatient(address _address) public view returns(string, string, string, string, string, string, string) {
+        require(isApproved[_address][msg.sender]);
+        
+        var p = patients[_address];
+        
+        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.medication);
+    }
+
+    //Search doctor details by entering a doctor address (Only doctor will be allowed to access)
+    function searchDoctor(address _address) public view returns(string, string, string, string, string, string, string) {
+        require(isDoctor[_address]);
+        
+        var d = doctors[_address];
+        
+        return (d.ic, d.name, d.phone, d.gender, d.dob, d.qualification, d.major);
+    }
+
+    //Search patient record creation date by entering a patient address
+    function searchRecordDate(address _address) public view returns(uint) {
+        var p = patients[_address];
+        
+        return (p.date);
+    }
+
+    //Search doctor profile creation date by entering a patient address
+    function searchDoctorDate(address _address) public view returns(uint) {
+        var d = doctors[_address];
+        
+        return (d.date);
+    }
+
+    //Search appointment details by entering a patient address
+    function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string) {
+        var a = appointments[_address];
+
+        return (a.doctoraddr, a.date, a.time, a.diagnosis, a.prescription, a.description, a.status);
     }
 
     //Retrieve patient count

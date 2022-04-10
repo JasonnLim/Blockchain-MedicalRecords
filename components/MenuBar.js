@@ -9,10 +9,16 @@ import { Router } from '../routes';
 
 export default class MenuBar extends Component {
 
-  onClicked = async event => {
+  onClickedPatient = async event => {
     event.preventDefault();
     const accounts = await web3.eth.getAccounts();
     Router.pushRoute(`/record/${accounts[0]}`);
+  }
+
+  onClickedDoctor = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/doctor/${accounts[0]}`);
   }
 
   render() {
@@ -34,12 +40,12 @@ export default class MenuBar extends Component {
             <Dropdown item text='Doctor'>
               <Dropdown.Menu>
                 <Dropdown.Item>
-                  <Link route='/list'>
-                    <a style={{color:'black'}}>View Profile</a>
+                  <Link route='/'>
+                    <a style={{color:'black'}} onClick={this.onClickedDoctor}>View Profile</a>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
-                  <Link route='/list'>
+                  <Link route='/edit-doctor'>
                     <a style={{color:'black'}}>Edit Profile</a>
                   </Link>
                 </Dropdown.Item>
@@ -60,7 +66,7 @@ export default class MenuBar extends Component {
               <Dropdown.Menu>
                 <Dropdown.Item>
                   <Link route='/'>
-                    <a style={{color:'black'}} onClick={this.onClicked}>View Profile</a>
+                    <a style={{color:'black'}} onClick={this.onClickedPatient}>View Profile</a>
                   </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>

@@ -1,7 +1,8 @@
 const routes = require('next-routes')();
 
-//Generate URL of individual campaigns page and create new campaign page
+//Route to specified page
 routes
-    .add('/record/:address','/details');
+    .add('/record/:address','/details')
+    .add('/doctor/:address','/details-doctor');
 
 module.exports = routes;

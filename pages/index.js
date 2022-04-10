@@ -1,10 +1,9 @@
-/* eslint-disable max-classes-per-file */
-/* eslint-disable react/no-multi-comp */
-
 import { createMedia } from '@artsy/fresnel'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Link } from '../routes';
+import { Router } from '../routes';
+import web3 from '../ethereum/web3';
 import {
   Button,
   Container,
@@ -29,10 +28,6 @@ const { MediaContextProvider, Media } = createMedia({
   },
 })
 
-/* Heads up!
- * HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled
- * components for such things.
- */
 const HomepageHeading = ({ mobile }) => (
   <Container text>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"></link>
@@ -70,23 +65,29 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
 }
 
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
 class DesktopContainer extends Component {
   state = {}
 
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
 
+  onClickedPatient = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/record/${accounts[0]}`);
+  }
+
+  onClickedDoctor = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/doctor/${accounts[0]}`);
+  }
+
   render() {
     const { children } = this.props
     const { fixed } = this.state
 
     return (
-
-
       <Media greaterThan='mobile'>
         <Visibility
           once={false}
@@ -99,87 +100,82 @@ class DesktopContainer extends Component {
             style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
-            <Menu size='large' 
-                fixed={fixed ? 'top' : null}
-                inverted={!fixed}
-                pointing={!fixed}
-                secondary={!fixed}>
+            <Menu size='large' inverted>
+              <Link route='/'>
+                  <a className='item'>Home</a>
+              </Link>
 
-                <Link route='/'>
-                    <a className='item'>Home</a>
+              <Menu.Menu position='right'>
+                <Link route='/dashboard'>
+                    <a className='item'>Dashboard</a>
                 </Link>
-      
-                <Menu.Menu position='right'>
-                  <Link route='/dashboard'>
-                      <a className='item'>Dashboard</a>
-                  </Link>
 
-                  <Link route='/list'>
-                      <a className='item'>Records List</a>
-                  </Link>
-      
-                  <Dropdown item text='Doctor'>
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link route='/list'>
-                          <a style={{color:'black'}}>View Profile</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/list'>
-                          <a style={{color:'black'}}>Edit Profile</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/appointment'>
-                          <a style={{color:'black'}}>Make Appointment</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/edit-appointment'>
-                          <a style={{color:'black'}}>Update Appointment</a>
-                        </Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  
-                  <Dropdown item text='Patient'>
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link route='/list'>
-                          <a style={{color:'black'}}>View Profile</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/edit-patient'>
-                          <a style={{color:'black'}}>Edit Profile</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/approve-doctor'>
-                          <a style={{color:'black'}}>Allow Access</a>
-                        </Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-      
-                  <Dropdown item text='Register'>
-                    <Dropdown.Menu>
-                      <Dropdown.Item>
-                        <Link route='/register-patient'>
-                          <a style={{color:'black'}}>Patient</a>
-                        </Link>
-                      </Dropdown.Item>
-                      <Dropdown.Item>
-                        <Link route='/register-doctor'>
-                          <a style={{color:'black'}}>Doctor</a>
-                        </Link>
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-      
-                </Menu.Menu>
-            </Menu>  
+                <Link route='/list'>
+                    <a className='item'>Records List</a>
+                </Link>
+
+                <Dropdown item text='Doctor'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Link route='/'>
+                        <a style={{color:'black'}} onClick={this.onClickedDoctor}>View Profile</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/edit-doctor'>
+                        <a style={{color:'black'}}>Edit Profile</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/make-appointment'>
+                        <a style={{color:'black'}}>Make Appointment</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/edit-appointment'>
+                        <a style={{color:'black'}}>Update Appointment</a>
+                      </Link>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+                
+                <Dropdown item text='Patient'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Link route='/'>
+                        <a style={{color:'black'}} onClick={this.onClickedPatient}>View Profile</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/edit-patient'>
+                        <a style={{color:'black'}}>Edit Profile</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/approve-doctor'>
+                        <a style={{color:'black'}}>Allow Access</a>
+                      </Link>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+
+                <Dropdown item text='Register'>
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Link route='/register-patient'>
+                        <a style={{color:'black'}}>Patient</a>
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/register-doctor'>
+                        <a style={{color:'black'}}>Doctor</a>
+                      </Link>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+
+              </Menu.Menu>
+            </Menu>    
             <HomepageHeading />
           </Segment>
         </Visibility>
@@ -198,8 +194,19 @@ class MobileContainer extends Component {
   state = {}
 
   handleSidebarHide = () => this.setState({ sidebarOpened: false })
-
   handleToggle = () => this.setState({ sidebarOpened: true })
+
+  onClickedPatient = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/record/${accounts[0]}`);
+  }
+
+  onClickedDoctor = async event => {
+    event.preventDefault();
+    const accounts = await web3.eth.getAccounts();
+    Router.pushRoute(`/doctor/${accounts[0]}`);
+  }
 
   render() {
     const { children } = this.props
@@ -231,12 +238,12 @@ class MobileContainer extends Component {
               <Dropdown item text='Doctor'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link route='/list'>
-                      <a style={{color:'black'}}>View Profile</a>
+                    <Link route='/'>
+                      <a style={{color:'black'}} onClick={this.onClickedDoctor}>View Profile</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <Link route='/list'>
+                    <Link route='/edit-doctor'>
                       <a style={{color:'black'}}>Edit Profile</a>
                     </Link>
                   </Dropdown.Item>
@@ -256,8 +263,8 @@ class MobileContainer extends Component {
               <Dropdown item text='Patient'>
                 <Dropdown.Menu>
                   <Dropdown.Item>
-                    <Link route='/list'>
-                      <a style={{color:'black'}}>View Profile</a>
+                    <Link route='/'>
+                      <a style={{color:'black'}} onClick={this.onClickedPatient}>View Profile</a>
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
@@ -319,10 +326,6 @@ MobileContainer.propTypes = {
 }
 
 const ResponsiveContainer = ({ children }) => (
-  /* Heads up!
-   * For large applications it may not be best option to put all page into these containers at
-   * they will be rendered twice for SSR.
-   */
   <MediaContextProvider>
     <DesktopContainer>{children}</DesktopContainer>
     <MobileContainer>{children}</MobileContainer>
