@@ -7,7 +7,9 @@ import web3 from '../ethereum/web3';
 const statusOptions = [
     { key: 'p', text: 'Pending', value: 'Pending' },
     { key: 'c', text: 'Complete', value: 'Complete' }
-  ]
+]
+
+var addressOptions = [];
 
 class MakeAppointment extends Component {
     state = {

@@ -41,6 +41,7 @@ contract Record {
     address public owner;
     address[] public patientList;
     address[] public doctorList;
+    address[] public appointmentList;
 
     mapping(address => Patients) patients;
     mapping(address => Doctors) doctors;
@@ -146,6 +147,7 @@ contract Record {
         a.status = _status;
         a.creationDate = block.timestamp;
 
+        appointmentList.push(_addr);
         appointmentCount++;
         AppointmentPerPatient[_addr]++;
     }
@@ -180,6 +182,11 @@ contract Record {
     //Retrieve a list of all doctors address
     function getDoctors() public view returns(address[]) {
         return doctorList;
+    }
+
+    //Retrieve a list of all appointments address
+    function getAppointments() public view returns(address[]) {
+        return appointmentList;
     }
     
     //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
