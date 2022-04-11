@@ -75,6 +75,7 @@ export default class Dashboard extends PureComponent {
         const accounts = await web3.eth.getAccounts();
         const allPatients = await record.methods.getPatients().call();
         const allDoctors = await record.methods.getDoctors().call();
+        const allAppointments = await record.methods.getAppointments().call();
 
         var patientCount = await record.methods.getPatientCount().call();
         var doctorCount = await record.methods.getDoctorCount().call();
@@ -102,8 +103,8 @@ export default class Dashboard extends PureComponent {
         }
 
         //Populate appointment object with data retrieved from the blockchain to be used in line chart
-        for(let i = 0; i < allPatients.length; i++){
-            var addr = allPatients[i]
+        for(let i = 0; i < allAppointments.length; i++){
+            var addr = allAppointments[i]
             var unixDate = await record.methods.searchAppointmentDate(addr).call({from: accounts[0]});
             var month = monthName[new Date(unixDate * 1000).getMonth()];
             apptdict[month] = (apptdict[month] || 0) + 1;
