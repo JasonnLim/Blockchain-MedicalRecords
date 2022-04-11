@@ -35,6 +35,7 @@ contract Record {
         string description;
         string diagnosis;
         string status;
+        uint creationDate;
     }
     
     address public owner;
@@ -143,6 +144,7 @@ contract Record {
         a.prescription = _prescription; 
         a.description = _description;
         a.status = _status;
+        a.creationDate = block.timestamp;
 
         appointmentCount++;
         AppointmentPerPatient[_addr]++;
@@ -210,6 +212,13 @@ contract Record {
         var d = doctors[_address];
         
         return (d.date);
+    }
+
+    //Search appointment creation date by entering a patient address
+    function searchAppointmentDate(address _address) public view returns(uint) {
+        var a = appointments[_address];
+        
+        return (a.creationDate);
     }
 
     //Search appointment details by entering a patient address

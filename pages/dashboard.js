@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { Card, Icon, Image, Segment, Message, Statistic } from 'semantic-ui-react';
-import { AreaChart, Area, PieChart, Pie, Sector, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, LineChart, Line, PieChart, Pie, Sector, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { Link } from '../routes';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
@@ -9,6 +9,7 @@ import { Router } from '../routes';
 
   var data = [];
   var pieData = [];
+  var lineData = [];
 
   const monthName = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -82,8 +83,9 @@ export default class Dashboard extends PureComponent {
 
         var dict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
         var docdict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
-        var addrDict = {};
+        var apptdict = {January:0, February:0, March:0, April:0, May:0, June:0, July:0, August:0, September:0, October:0, November:0, December:0};
 
+        //Populate patient object with data retrieved from the blockchain to be used in area chart
         for(let i = 0; i < allPatients.length; i++){
             var addr = allPatients[i]
             var unixDate = await record.methods.searchRecordDate(addr).call({from: accounts[0]});
@@ -91,6 +93,7 @@ export default class Dashboard extends PureComponent {
             dict[month] = (dict[month] || 0) + 1;
         }
         
+        //Populate doctor object with data retrieved from the blockchain to be used in area chart
         for(let i = 0; i < allDoctors.length; i++){
             var addr = allDoctors[i]
             var unixDate = await record.methods.searchDoctorDate(addr).call({from: accounts[0]});
@@ -98,6 +101,15 @@ export default class Dashboard extends PureComponent {
             docdict[month] = (docdict[month] || 0) + 1;
         }
 
+        //Populate appointment object with data retrieved from the blockchain to be used in line chart
+        for(let i = 0; i < allPatients.length; i++){
+            var addr = allPatients[i]
+            var unixDate = await record.methods.searchAppointmentDate(addr).call({from: accounts[0]});
+            var month = monthName[new Date(unixDate * 1000).getMonth()];
+            apptdict[month] = (apptdict[month] || 0) + 1;
+        }
+
+        //Populate appointment array with data retrieved from the blockchain to be used in piechart
         for(let i = 0; i < allPatients.length; i++){
             var addr = allPatients[i]
             var count = await record.methods.getAppointmentPerPatient(addr).call({from: accounts[0]});
@@ -109,6 +121,31 @@ export default class Dashboard extends PureComponent {
             //Dynamically render piechart data
             pieData[i] = {'Name': addr, 'Count': parseInt(count)};
         }
+        
+        var today = new Date();
+        var mm = String(today.getMonth());
+        var resultPat, resultAppt, patientMonthOverMonthChange, appointmentMonthOverMonthChange;
+
+        //Retrieve and display month-over-month patient growth
+        for(let i = 0; i < 12; i++){
+          if(monthName[mm] == Object.entries(dict)[i][0]){
+            resultPat = parseInt(Object.entries(dict)[i][1]) - parseInt(Object.entries(dict)[--i][1]);
+            patientMonthOverMonthChange = (resultPat * 100).toFixed(2);
+            break;
+          }
+        }
+
+        //Retrieve and display month-over-month appointment growth
+        for(let i = 0; i < 12; i++){
+          if(monthName[mm] == Object.entries(apptdict)[i][0]){
+            resultAppt = parseInt(Object.entries(apptdict)[i][1]) - parseInt(Object.entries(apptdict)[--i][1]);
+            appointmentMonthOverMonthChange = (resultAppt * 100).toFixed(2);
+            break;
+          }
+        }
+
+        var patGrowthColor = (patientMonthOverMonthChange > 0) ? 'green' : 'red';
+        var apptGrowthColor = (appointmentMonthOverMonthChange > 0) ? 'green' : 'red';
 
         data = [
             {
@@ -173,13 +210,98 @@ export default class Dashboard extends PureComponent {
             },
         ];
 
-        return { patientCount, doctorCount, appointmentCount, permissionGrantedCount, data, pieData };
+        lineData = [
+            {
+              Name: Object.entries(apptdict)[0][0],
+              Count: Object.entries(apptdict)[0][1],
+            },
+            {
+              Name: Object.entries(apptdict)[1][0],
+              Count: Object.entries(apptdict)[1][1],
+            },
+            {
+              Name: Object.entries(apptdict)[2][0],
+              Count: Object.entries(apptdict)[2][1],
+            },
+            {
+              Name: Object.entries(apptdict)[3][0],
+              Count: Object.entries(apptdict)[3][1],
+            },
+            {
+              Name: Object.entries(apptdict)[4][0],
+              Count: Object.entries(apptdict)[4][1],
+            },
+            {
+              Name: Object.entries(apptdict)[5][0],
+              Count: Object.entries(apptdict)[5][1],
+            },
+            {
+              Name: Object.entries(apptdict)[6][0],
+              Count: Object.entries(apptdict)[6][1],
+            },
+            {
+              Name: Object.entries(apptdict)[7][0],
+              Count: Object.entries(apptdict)[7][1],
+            },
+            {
+              Name: Object.entries(apptdict)[8][0],
+              Count: Object.entries(apptdict)[8][1],
+            },
+            {
+              Name: Object.entries(apptdict)[9][0],
+              Count: Object.entries(apptdict)[9][1],
+            },
+            {
+              Name: Object.entries(apptdict)[10][0],
+              Count: Object.entries(apptdict)[10][1],
+            },
+            {
+              Name: Object.entries(apptdict)[11][0],
+              Count: Object.entries(apptdict)[11][1],
+            },
+        ]
+
+        return { patientCount, doctorCount, appointmentCount, permissionGrantedCount, data, pieData, patientMonthOverMonthChange, appointmentMonthOverMonthChange, patGrowthColor, apptGrowthColor };
     }
 
     render() {
         return (
             <Layout>
                 <>
+                <Card.Group centered itemsPerRow='2'>
+                  <Card color={this.props.patGrowthColor}>
+                      <Card.Content>
+                          <Image
+                              floated='right'
+                              size='mini'
+                              src='https://cdn-icons-png.flaticon.com/512/858/858736.png'
+                          />
+                          <Card.Header>Month-over-Month Patient Growth</Card.Header>
+                      </Card.Content>
+                      <Card.Content extra>
+                      <Statistic size='small' color={this.props.patGrowthColor}>
+                          <Statistic.Value>{this.props.patientMonthOverMonthChange}%</Statistic.Value>
+                      </Statistic>
+                      </Card.Content>
+                  </Card>
+
+                  <Card color={this.props.apptGrowthColor}>
+                      <Card.Content>
+                          <Image
+                              floated='right'
+                              size='mini'
+                              src='https://cdn-icons-png.flaticon.com/512/858/858736.png'
+                          />
+                          <Card.Header>Month-over-Month Appointment Growth</Card.Header>
+                      </Card.Content>
+                      <Card.Content extra>
+                        <Statistic size='small' color={this.props.apptGrowthColor}>
+                            <Statistic.Value>{this.props.appointmentMonthOverMonthChange}%</Statistic.Value>
+                        </Statistic>
+                      </Card.Content>
+                  </Card>
+                </Card.Group>
+
                 <Card.Group centered itemsPerRow='4'>
                     <Card>
                         <Card.Content>
@@ -278,6 +400,30 @@ export default class Dashboard extends PureComponent {
                             <Area type="monotone" dataKey="Patients" stroke="#8884d8" fillOpacity={1} fill="url(#colorPatients)" />
                         </AreaChart>
                     </ResponsiveContainer>
+                </Segment>
+                
+                <Segment padded>
+                  <h3 style={{textAlign: "center"}}>Number of Appointments in 2022</h3>
+                  <ResponsiveContainer width="100%" aspect={3}>
+                      <LineChart
+                      width={500}
+                      height={300}
+                      data={lineData}
+                      margin={{
+                          top: 10,
+                          right: 30,
+                          left: 20,
+                          bottom: 5,
+                      }}
+                      >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="Name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="Count" stroke="#8884d8" activeDot={{ r: 8 }} />
+                      </LineChart>
+                  </ResponsiveContainer>
                 </Segment>
                 
                 <Segment padded>
