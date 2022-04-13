@@ -8,8 +8,14 @@ contract Record {
         string phone;
         string gender;
         string dob;
+        string height;
+        string weight;
+        string houseaddr;
         string bloodgroup;
+        string allergies;
         string medication;
+        string emergencyName;
+        string emergencyContact;
         address addr;
         uint date;
     }
@@ -62,7 +68,7 @@ contract Record {
     }
     
     //Retrieve patient details from user sign up page and store the details into the blockchain
-    function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _medication) public {
+    function setDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _height, string _weight, string _houseaddr, string _bloodgroup, string _allergies, string _medication, string _emergencyName, string _emergencyContact) public {
         require(!isPatient[msg.sender]);
         var p = patients[msg.sender];
         
@@ -71,8 +77,14 @@ contract Record {
         p.phone = _phone;
         p.gender = _gender;
         p.dob = _dob;
+        p.height = _height; 
+        p.weight = _weight;
+        p.houseaddr = _houseaddr;
         p.bloodgroup = _bloodgroup;
+        p.allergies = _allergies;
         p.medication = _medication;
+        p.emergencyName = _emergencyName;
+        p.emergencyContact = _emergencyContact;
         p.addr = msg.sender;
         p.date = block.timestamp;
         
@@ -83,7 +95,7 @@ contract Record {
     }
     
     //Allows patient to edit their existing record
-    function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _bloodgroup, string _medication) public {
+    function editDetails(string _ic, string _name, string _phone, string _gender, string _dob, string _height, string _weight, string _houseaddr, string _bloodgroup, string _allergies, string _medication, string _emergencyName, string _emergencyContact) public {
         require(isPatient[msg.sender]);
         var p = patients[msg.sender];
         
@@ -92,8 +104,14 @@ contract Record {
         p.phone = _phone;
         p.gender = _gender;
         p.dob = _dob;
+        p.height = _height; 
+        p.weight = _weight;
+        p.houseaddr = _houseaddr;
         p.bloodgroup = _bloodgroup;
+        p.allergies = _allergies;
         p.medication = _medication;
+        p.emergencyName = _emergencyName;
+        p.emergencyContact = _emergencyContact;
         p.addr = msg.sender;    
     }
 
@@ -190,12 +208,21 @@ contract Record {
     }
     
     //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
-    function searchPatient(address _address) public view returns(string, string, string, string, string, string, string) {
+    function searchPatientDemographic(address _address) public view returns(string, string, string, string, string, string, string) {
         require(isApproved[_address][msg.sender]);
         
         var p = patients[_address];
         
-        return (p.ic, p.name, p.phone, p.gender, p.dob, p.bloodgroup, p.medication);
+        return (p.ic, p.name, p.phone, p.gender, p.dob, p.height, p.weight);
+    }
+
+    //Search patient details by entering a patient address (Only record owner or doctor with permission will be allowed to access)
+    function searchPatientMedical(address _address) public view returns(string, string, string, string, string, string) {
+        require(isApproved[_address][msg.sender]);
+        
+        var p = patients[_address];
+        
+        return (p.houseaddr, p.bloodgroup, p.allergies, p.medication, p.emergencyName, p.emergencyContact);
     }
 
     //Search doctor details by entering a doctor address (Only doctor will be allowed to access)
@@ -205,6 +232,14 @@ contract Record {
         var d = doctors[_address];
         
         return (d.ic, d.name, d.phone, d.gender, d.dob, d.qualification, d.major);
+    }
+    
+    //Search appointment details by entering a patient address
+    function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string, string) {
+        var a = appointments[_address];
+        var d = doctors[a.doctoraddr];
+
+        return (a.doctoraddr, d.name, a.date, a.time, a.diagnosis, a.prescription, a.description, a.status);
     }
 
     //Search patient record creation date by entering a patient address
@@ -226,13 +261,6 @@ contract Record {
         var a = appointments[_address];
         
         return (a.creationDate);
-    }
-
-    //Search appointment details by entering a patient address
-    function searchAppointment(address _address) public view returns(address, string, string, string, string, string, string) {
-        var a = appointments[_address];
-
-        return (a.doctoraddr, a.date, a.time, a.diagnosis, a.prescription, a.description, a.status);
     }
 
     //Retrieve patient count

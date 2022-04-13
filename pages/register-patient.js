@@ -11,6 +11,13 @@ const options = [
     { key: 'o', text: 'Other', value: 'Other' },
 ]
 
+const allergyOptions = [
+    { key: 'f', text: 'Food', value: 'Food' },
+    { key: 'm', text: 'Medical', value: 'Medical' },
+    { key: 'e', text: 'Environmental', value: 'Environmental' },
+    { key: 'o', text: 'Others', value: 'Others' },
+]
+
 class RegisterPatient extends Component {
     state = {
         ic: '',
@@ -18,18 +25,26 @@ class RegisterPatient extends Component {
         phone: '',
         gender: '',
         dob: '',
+        height: '',
+        weight: '',
+        houseaddr: '',
         bloodgroup: '',
+        allergies: '',
         medication: '',
+        emergencyName: '',
+        emergencyContact: '',
         loading: false,
         errorMessage: ''
     };
 
     handleGender = (e, { value }) => this.setState({ gender: value })
 
+    handleAllergies = (e, { value }) => this.setState({ allergies: value })
+
     onSubmit = async event => {
         event.preventDefault();
 
-        const { ic, name, phone, gender, dob, bloodgroup, medication } = this.state;
+        const { ic, name, phone, gender, dob, height, weight, houseaddr, bloodgroup, allergies, medication, emergencyName, emergencyContact } = this.state;
 
         this.setState({loading: true, errorMessage: ''});
 
@@ -37,7 +52,7 @@ class RegisterPatient extends Component {
             const accounts = await web3.eth.getAccounts();
 
             await record.methods.setDetails(
-                ic, name, phone, gender, dob, bloodgroup, medication
+                ic, name, phone, gender, dob, height, weight, houseaddr, bloodgroup, allergies, medication, emergencyName, emergencyContact
             ).send({ from: accounts[0] });
 
             alert("Account created successfully!");
@@ -48,14 +63,15 @@ class RegisterPatient extends Component {
             alert("Account already exists");
         }
 
-        this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', bloodgroup: '', medication: ''});
+        this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', height: '', weight: '', houseaddr: '', bloodgroup: '', allergies: '', medication: '', emergencyName: '', emergencyContact: ''});
     }
 
     render() {
         return (
             <Layout>
+                <Segment padded><h1>Create New Record</h1></Segment>
                 <Segment>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Create New Record</h2>
+                <h2 style={{ marginTop: '10px', marginBottom: '30px'}}>General Information</h2>
                 <Divider clearing />
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
@@ -107,8 +123,46 @@ class RegisterPatient extends Component {
                                     this.setState({ dob: event.target.value })}  
                             />
                         </Form.Field>
+
+                        <Form.Field>
+                            <label>Height</label>
+                            <Input 
+                                placeholder = 'Eg. 183'
+                                label={{ basic: true, content: 'cm' }}
+                                labelPosition='right'
+                                value= {this.state.height}
+                                onChange= {event => 
+                                    this.setState({ height: event.target.value })}  
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Weight</label>
+                            <Input 
+                                placeholder = 'Eg. 65'
+                                label={{ basic: true, content: 'kg' }}
+                                labelPosition='right'
+                                value= {this.state.weight}
+                                onChange= {event => 
+                                    this.setState({ weight: event.target.value })}  
+                            />
+                        </Form.Field>
                     </Form.Group>                   
+                   
                     <br/>
+                    <Form.Group widths='equal'>
+                        <Form.TextArea
+                                label='House Address'
+                                placeholder = 'Eg. 1234, Jalan Seksyen 1/3, 31900 Kampar, Perak'
+                                value= {this.state.houseaddr}
+                                onChange= {event => 
+                                    this.setState({ houseaddr: event.target.value })}  
+                        />
+                    </Form.Group>
+
+                    <br/>
+                    <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Medical History</h2>
+                    <Divider clearing />                    
                     <Form.Group widths='equal'>
                         <Form.Field>
                             <label>Blood Group</label>
@@ -120,13 +174,45 @@ class RegisterPatient extends Component {
                             />
                         </Form.Field>
 
-                        <Form.Field>
-                            <label>Current Medications</label>
-                            <Input 
+                        <Form.Field 
+                                label='Allergies' 
+                                control={Select} 
+                                options={allergyOptions} 
+                                onChange={this.handleAllergies}
+                        />
+                    </Form.Group>
+                    <br/>
+                    <Form.Group widths='equal'>
+                        <Form.TextArea
+                                label='Current Medications'
                                 placeholder = 'Eg. Antidepressants'
                                 value= {this.state.medication}
                                 onChange= {event => 
                                     this.setState({ medication: event.target.value })}  
+                        />
+                    </Form.Group>
+
+                    <br/>
+                    <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Emergency Contact</h2>
+                    <Divider clearing />
+                    <Form.Group widths='equal'>
+                       <Form.Field>
+                            <label>Emergency Contact Name</label>
+                            <Input 
+                                placeholder = 'Eg. Taylor Smith'
+                                value= {this.state.emergencyName}
+                                onChange= {event => 
+                                    this.setState({ emergencyName: event.target.value })}  
+                            />
+                        </Form.Field>
+
+                        <Form.Field>
+                            <label>Emergency Contact Phone</label>
+                            <Input 
+                                placeholder = 'Eg. 0124995002'
+                                value= {this.state.emergencyContact}
+                                onChange= {event => 
+                                    this.setState({ emergencyContact: event.target.value })}  
                             />
                         </Form.Field>
                     </Form.Group>

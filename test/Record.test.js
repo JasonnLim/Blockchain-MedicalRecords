@@ -23,13 +23,13 @@ describe('Records', () => {
 
     it('can add record', async () => {
         await record.methods.setDetails(
-            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
     });
 
     it('can retrieve all record address', async () => {
         await record.methods.setDetails(
-            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
 
         const allRecords = await record.methods.getPatients().call();
@@ -41,7 +41,7 @@ describe('Records', () => {
 
     it('can search for a patient', async () => {
         await record.methods.setDetails(
-            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
         
         const owner = await record.methods.owner().call();
@@ -54,11 +54,11 @@ describe('Records', () => {
 
     it('can create patient using multiple accounts', async () => {
         await record.methods.setDetails(
-            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
 
         await record.methods.setDetails(
-            '001107020345', 'Johssean', '0123456789', 'Male', '07/22/2222','O', 'Flu'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[1], gas: '5000000' });
         
         const allRecords = await record.methods.getPatients().call();
