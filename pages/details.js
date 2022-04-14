@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Input, Header, Message, Button } from 'semantic-ui-react';
+import { Grid, Segment, Header, Image  } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
@@ -10,12 +10,16 @@ class RecordDetails extends Component {
     static async getInitialProps(props) {
         const addr = props.query.address;
         const accounts = await web3.eth.getAccounts();
-        var records, records2, appointment;
+        var records, records2, appointment, profilePic;
 
         try {
             records = await record.methods.searchPatientDemographic(addr).call({from: accounts[0]});
             records2 = await record.methods.searchPatientMedical(addr).call({from: accounts[0]});
             appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]});  
+
+            if(appointment[0].includes("0x00000000000")) appointment[0] = '';
+
+            profilePic = (records[3] == 'Male') ? 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png' : 'https://cdn-icons-png.flaticon.com/512/3135/3135789.png';
             
             return {
                 ic: records[0],
@@ -28,9 +32,10 @@ class RecordDetails extends Component {
                 
                 houseaddr: records2[0],
                 bloodgroup: records2[1],
-                medication: records2[2],
-                emergencyName: records2[3],
-                emergencyContact: records2[4],
+                allergies: records2[2],
+                medication: records2[3],
+                emergencyName: records2[4],
+                emergencyContact: records2[5],
 
                 doctoraddr: appointment[0],
                 doctorname: appointment[1],
@@ -39,7 +44,8 @@ class RecordDetails extends Component {
                 diagnosis: appointment[4],
                 prescription: appointment[5],
                 description: appointment[6],
-                status: appointment[7]
+                status: appointment[7],
+                profilePic
             };
         }
         catch (err) {
@@ -48,44 +54,166 @@ class RecordDetails extends Component {
         }
     }
 
-    renderDisplay() {
-        return(
-            <div>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Patient Medical Record</h2>
-                <Segment inverted tertiary color='teal'>
+    renderDisplay(){
+        return (
+            <Grid columns={2} stackable className="fill-content">
+              <Grid.Row>
+                <Grid.Column width={1} />
+                <Grid.Column width={5}>
+                  <Segment>
+                    <Image style={{marginBottom:'25px'}} className="centered" src={this.props.profilePic} size="small" circular />
                     <Segment>
-                        <h3>IC: {this.props.ic}</h3>
-                        <h3>Name: {this.props.name}</h3>
-                        <h3>Phone: {this.props.phone}</h3>
-                        <h3>Gender: {this.props.gender}</h3>
-                        <h3>Date of Birth: {this.props.dob}</h3>
-                        <h3>Height: {this.props.height}</h3>
-                        <h3>Weight: {this.props.weight}</h3>
-                        <h3>Blood Group: {this.props.bloodgroup}</h3>
-                        <h3>Current Medications: {this.props.medication}</h3>
+                        <h2 style={{marginBottom:'25px'}}>{this.props.name}</h2>
+                        <Grid columns={2}><Grid.Row>
+                            <Grid.Column><b style={{color:'grey'}}>IC</b></Grid.Column>
+                            <Grid.Column><b>{this.props.ic}</b></Grid.Column>
+                        </Grid.Row></Grid>
+                        <Grid columns={2}><Grid.Row>
+                            <Grid.Column><b style={{color:'grey'}}>Phone</b></Grid.Column>
+                            <Grid.Column><b>{this.props.phone}</b></Grid.Column>
+                        </Grid.Row></Grid>
+                        <Grid columns={2}><Grid.Row>
+                            <Grid.Column><b style={{color:'grey'}}>Gender</b></Grid.Column>
+                            <Grid.Column><b>{this.props.gender}</b></Grid.Column>
+                        </Grid.Row></Grid>
                     </Segment>
-                </Segment>
+                  </Segment>
+                  <Segment>
+                    <Header as="h3" color='grey' style={{marginBottom:'25px'}}>EMERGENCY CONTACT</Header>
+                    <Grid columns={2} verticalAlign='top'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Name</b>
+                                <div>{this.props.emergencyName}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Phone</b>
+                                <div>{this.props.emergencyContact}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                  </Segment>
+                </Grid.Column>
+                <Grid.Column width={9}>
+                  <Segment>
+                    <Header as="h3" color='grey' style={{marginBottom:'25px'}}>PERSONAL DETAILS</Header>
+                    <Grid columns={4} verticalAlign='top'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Full Name</b>
+                                <div>{this.props.name}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Birthdate</b>
+                                <div>{this.props.dob}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Height</b>
+                                <div>{this.props.height} cm</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Weight</b>
+                                <div>{this.props.weight} kg</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <Grid columns={1}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Address</b>
+                                <div>{this.props.houseaddr}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
+                    <Header as="h3" color='grey' style={{marginTop:'35px', marginBottom:'25px'}}>MEDICAL DETAILS</Header>
+                    <Grid columns={2} verticalAlign='top'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Blood Group</b>
+                                <div>{this.props.bloodgroup}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Allergies</b>
+                                <div>{this.props.allergies}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
+                    <Grid>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Medications</b>
+                                <div>{this.props.medication}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                  </Segment>
                 
-                <Segment inverted color='blue'>
-                    <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Appointments</h2>
-                    <Segment>
-                        <h3>Doctor Address: {this.props.doctoraddr}</h3>
-                        <h3>Date: {this.props.date}</h3>
-                        <h3>Time: {this.props.time}</h3>
-                        <h3>Diagnosis: {this.props.diagnosis}</h3>
-                        <h3>Prescription: {this.props.prescription}</h3>
-                        <h3>Description: {this.props.description}</h3>
-                        <h3>Status: {this.props.status}</h3>
+                  <Segment> 
+                    <Header as="h3" color='grey' style={{marginBottom:'25px'}}>APPOINTMENT</Header>
+                    <Grid columns={1} verticalAlign='top'>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Doctor Address</b>
+                                <div>{this.props.doctoraddr}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <Grid columns={3}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Doctor Name</b>
+                                <div>{this.props.doctorname}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Date</b>
+                                <div>{this.props.date}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Time</b>
+                                <div>{this.props.time}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={2}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Prescription</b>
+                                <div>{this.props.prescription}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Description</b>
+                                <div>{this.props.description}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+
+                    <Grid columns={2}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Diagnosis</b>
+                                <div>{this.props.diagnosis}</div>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <b style={{color:'grey'}}>Status</b>
+                                <div>{this.props.status}</div>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                     </Segment>
-                </Segment>
-            </div>
-        );
+                </Grid.Column>
+                <Grid.Column width={1} />
+              </Grid.Row>
+            </Grid>
+          );
     }
 
     render() {
         return (
             <Layout>
-                <div>
+                <div style={{fontFamily:'Helvetica'}}>
                     {this.renderDisplay()}
                 </div>
             </Layout>

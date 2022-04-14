@@ -51,7 +51,7 @@ class EditPatient extends Component {
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.setDetails(
+            await record.methods.editDetails(
                 ic, name, phone, gender, dob, height, weight, houseaddr, bloodgroup, allergies, medication, emergencyName, emergencyContact
             ).send({ from: accounts[0] });
 

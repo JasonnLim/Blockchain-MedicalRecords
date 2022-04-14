@@ -7,9 +7,9 @@ import web3 from '../ethereum/web3';
 const statusOptions = [
     { key: 'p', text: 'Pending', value: 'Pending' },
     { key: 'c', text: 'Complete', value: 'Complete' }
-  ]
+]
 
-class editAppointmentForm extends Component {
+class EditAppointment extends Component {
     state = {
         patientaddr: '',
         date: '',
@@ -26,18 +26,18 @@ class editAppointmentForm extends Component {
     onSubmit = async event => {
         event.preventDefault();
 
-        const { patientaddr, date, time, prescription, description, diagnosis, status } = this.state;
+        const { patientaddr, date, time, diagnosis, prescription, description, status } = this.state;
 
         this.setState({loading: true, errorMessage: ''});
 
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.setAppointment(
-                patientaddr, date, time, prescription, description, diagnosis, status
+            await record.methods.editAppointment(
+                patientaddr, date, time, diagnosis, prescription, description, status
             ).send({ from: accounts[0] });
 
-            alert("Appointment created successfully!");
+            alert("Appointment updated successfully!");
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
@@ -50,8 +50,9 @@ class editAppointmentForm extends Component {
     render() {
         return (
             <Layout>
+                <Segment padded><h1>Update Appointment</h1></Segment>
                 <Segment>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Edit Appointment</h2>
+                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Appointment Information</h2>
                 <Divider clearing />
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
@@ -65,7 +66,11 @@ class editAppointmentForm extends Component {
                             />
                         </Form.Field>
 
-                        <Form.Field>
+                    </Form.Group>
+
+                    <br/> 
+                    <Form.Group widths='equal'>
+                    <Form.Field>
                             <label>Date</label>
                             <Input
                                 placeholder = 'Eg. 10/10/2022'                        
@@ -78,54 +83,49 @@ class editAppointmentForm extends Component {
                         <Form.Field>
                             <label>Time</label>
                             <Input
-                                placeholder = 'Eg. 11:50pm'
+                                placeholder = 'Eg. 10:30am'
                                 value= {this.state.time}
                                 onChange= {event => 
                                     this.setState({ time: event.target.value })}  
                             />
                         </Form.Field>
-                    </Form.Group>
-                    <br/>              
-                    <Form.Group widths='equal'>
-                        <Form.Field>
-                            <label>Prescription</label>
-                            <Input 
-                                placeholder = 'Eg. Amoxicillin 500mg'
-                                value= {this.state.prescription}
-                                onChange= {event => 
-                                    this.setState({ prescription: event.target.value })}  
-                            />
-                        </Form.Field>
-
-                        <Form.Field>
-                            <label>Description</label>
-                            <Input 
-                                placeholder = 'Eg. Still requires further observation'
-                                value= {this.state.description}
-                                onChange= {event => 
-                                    this.setState({ description: event.target.value })}  
-                            />
-                        </Form.Field>
-                    </Form.Group>                   
-                    <br/>
-                    <Form.Group widths='equal'>
-                        <Form.Field>
-                            <label>Diagnosis</label>
-                            <Input 
-                                placeholder = 'Eg. Skin Infection'
-                                value= {this.state.diagnosis}
-                                onChange= {event => 
-                                    this.setState({ diagnosis: event.target.value })}  
-                            />
-                        </Form.Field>
-
+                    
                         <Form.Field 
                             label='Status' 
                             control={Select} 
                             options={statusOptions} 
                             onChange={this.handleStatus}
                         />
-                    </Form.Group>
+                    </Form.Group> 
+
+                    <br/>
+                    <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Medical Information</h2>
+                    <Divider clearing />             
+                    <Form.TextArea
+                            label='Prescription'
+                            placeholder = 'Eg. Amoxicillin 500mg'
+                            value= {this.state.prescription}
+                            onChange= {event => 
+                                this.setState({ prescription: event.target.value })} 
+                    />
+                    
+                    <br/>
+                    <Form.TextArea
+                                label='Diagnosis'
+                                placeholder = 'Eg. Skin Infection'
+                                value= {this.state.diagnosis}
+                                onChange= {event => 
+                                    this.setState({ diagnosis: event.target.value })}  
+                    />             
+                    <br/>
+                    <Form.TextArea
+                                label='Notes'
+                                placeholder = 'Eg. Still requires further observation'
+                                value= {this.state.description}
+                                onChange= {event => 
+                                    this.setState({ description: event.target.value })}  
+                    />      
+
                     <br/>
                     <Message error header="Oops!" content={this.state.errorMessage}/>
                     <Button primary loading={this.state.loading}>Create</Button>
@@ -136,4 +136,4 @@ class editAppointmentForm extends Component {
     }
 }
 
-export default editAppointmentForm;
+export default EditAppointment;

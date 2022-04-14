@@ -40,6 +40,7 @@ const HomepageHeading = ({ mobile }) => (
         fontWeight: 'normal',
         marginBottom: 0,
         marginTop: mobile ? '1.5em' : '3em',
+        fontFamily:'Georgia',
       }}
     />
     <Header

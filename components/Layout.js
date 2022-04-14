@@ -15,7 +15,7 @@ export default props => {
             <Segment
             inverted
             textAlign='center'
-            style={{ minHeight: 350}}
+            style={{ minHeight: 340}}
             >
             <MenuBar/>
                 <Icon size='huge' name='hospital'/>

@@ -10,6 +10,14 @@ const genderOptions = [
     { key: 'o', text: 'Other', value: 'Other' },
 ]
 
+const qualificationOptions = [
+    { key: 'h', text: 'Higher Certificate/SPM', value: 'Higher Certificate/SPM' },
+    { key: 'd', text: 'Diploma', value: 'Diploma' },
+    { key: 'b', text: 'Bachelor\'s Degree', value: 'Bachelor\'s Degree' },
+    { key: 'm', text: 'Master\'s Degree', value: 'Master\'s Degree' },
+    { key: 'dd', text: 'Doctoral Degree', value: 'Doctoral Degree' },
+]
+
 class RegisterDoctor extends Component {
     state = {
         ic: '',
@@ -24,6 +32,8 @@ class RegisterDoctor extends Component {
     };
 
     handleGender = (e, { value }) => this.setState({ gender: value })
+
+    handleQualification = (e, { value }) => this.setState({ qualification: value })
 
     onSubmit = async event => {
         event.preventDefault();
@@ -52,8 +62,9 @@ class RegisterDoctor extends Component {
     render() {
         return (
             <Layout>
+                <Segment padded><h1>Register New Doctor</h1></Segment>
                 <Segment>
-                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>New Doctor Registration</h2>
+                <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>General Information</h2>
                 <Divider clearing />
                 <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
                     <Form.Group widths='equal'>
@@ -107,16 +118,15 @@ class RegisterDoctor extends Component {
                         </Form.Field>
                     </Form.Group>                   
                     <br/>
+                    <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>Education Information</h2>
+                    <Divider clearing />
                     <Form.Group widths='equal'>
-                        <Form.Field>
-                            <label>Highest Qualification</label>
-                            <Input 
-                                placeholder = 'Eg. Doctoral Degree'
-                                value= {this.state.qualification}
-                                onChange= {event => 
-                                    this.setState({ qualification: event.target.value })}  
-                            />
-                        </Form.Field>
+                        <Form.Field 
+                            label='Highest Qualification' 
+                            control={Select} 
+                            options={qualificationOptions} 
+                            onChange={this.handleQualification}
+                        />
 
                         <Form.Field>
                             <label>Major</label>
