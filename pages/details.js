@@ -84,11 +84,11 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Name</b>
-                                <div>{this.props.emergencyName}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.emergencyName}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Phone</b>
-                                <div>{this.props.emergencyContact}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.emergencyContact}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -101,19 +101,19 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Full Name</b>
-                                <div>{this.props.name}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.name}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Birthdate</b>
-                                <div>{this.props.dob}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.dob}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Height</b>
-                                <div>{this.props.height} cm</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.height} cm</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Weight</b>
-                                <div>{this.props.weight} kg</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.weight} kg</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -121,7 +121,7 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Address</b>
-                                <div>{this.props.houseaddr}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.houseaddr}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -131,11 +131,11 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Blood Group</b>
-                                <div>{this.props.bloodgroup}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.bloodgroup}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Allergies</b>
-                                <div>{this.props.allergies}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.allergies}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -144,7 +144,7 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Medications</b>
-                                <div>{this.props.medication}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.medication}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -156,7 +156,7 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Doctor Address</b>
-                                <div>{this.props.doctoraddr}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.doctoraddr}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -164,15 +164,15 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Doctor Name</b>
-                                <div>{this.props.doctorname}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.doctorname}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Date</b>
-                                <div>{this.props.date}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.date}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Time</b>
-                                <div>{this.props.time}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.time}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -181,11 +181,11 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Prescription</b>
-                                <div>{this.props.prescription}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.prescription}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Description</b>
-                                <div>{this.props.description}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.description}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -194,11 +194,11 @@ class RecordDetails extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Diagnosis</b>
-                                <div>{this.props.diagnosis}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.diagnosis}</div>
                             </Grid.Column>
                             <Grid.Column>
                                 <b style={{color:'grey'}}>Status</b>
-                                <div>{this.props.status}</div>
+                                <div style={{fontWeight:'bold'}}>{this.props.status}</div>
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
