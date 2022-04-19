@@ -45,11 +45,10 @@ describe('Records', () => {
         ).send({ from: accounts[0], gas: '5000000' });
         
         const owner = await record.methods.owner().call();
-        console.log(owner);
 
-        names = await record.methods.searchPatient(owner).call();
+        names = await record.methods.searchPatientDemographic(owner).call();
 
-        console.log(names[0]);
+        assert.equal(names[0], '001107020345');
     });
 
     it('can create patient using multiple accounts', async () => {
@@ -62,15 +61,14 @@ describe('Records', () => {
         ).send({ from: accounts[1], gas: '5000000' });
         
         const allRecords = await record.methods.getPatients().call();
-        console.log(allRecords);
 
-        console.log(accounts[0])
-        console.log(accounts[1])
+        assert.equal(allRecords[0], accounts[0]);
+        assert.equal(allRecords[1], accounts[1]);
     });
 
     it('can create appointment using doctor account', async () => {
         await record.methods.setDetails(
-            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','Doctorate', 'Virology'
+            '001107020345', 'Bane Gateson', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smooth', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
 
         await record.methods.setDoctor(
@@ -83,13 +81,12 @@ describe('Records', () => {
         
         var appointment = await record.methods.searchAppointment(accounts[0]).call({from: accounts[1]}); 
 
-        console.log(appointment[0])
-        console.log(appointment[6])
+        assert.notEqual(appointment[0], null);
     });
     
     it('can count number of records created by patient', async () => {
         await record.methods.setDetails(
-            '001107020345', 'Josn', '0123456789', 'Male', '07/22/2222','Doctorate', 'Virology'
+            '001107020345', 'John', '0123456789', 'Male', '07/22/2222','183', '75', '1234, Jalan Sekysen 1/3, 31900 Kampar, Perak.', 'O', 'Food', 'Antidepressants', 'Taylor Smith', '0128993344'
         ).send({ from: accounts[0], gas: '5000000' });
         
         const patientCount = await record.methods.getPatientCount().call();
