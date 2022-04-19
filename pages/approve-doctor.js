@@ -37,7 +37,7 @@ class ApproveDoctor extends Component {
                     <Header
                             as='h2'
                             content='Allow Access'
-                            subheader='Give doctor permission to view records'
+                            subheader='Give doctor or patient permission to view records'
                     ></Header>
                     <Input 
                         fluid
