@@ -62,7 +62,7 @@ class EditDoctor extends Component {
     render() {
         return (
             <Layout>
-                <Segment padded><h1>Edit Doctor</h1></Segment>
+                <Segment padded><h1>Edit Profile</h1></Segment>
                 <Segment>
                 <h2 style={{ marginTop: '20px', marginBottom: '30px'}}>General Information</h2>
                 <Divider clearing />
