@@ -192,6 +192,12 @@ contract Record {
         return true;
     }
 
+    //Owner of the record can take away the permission granted to doctors to view records
+    function RevokePermission(address _address) public returns(bool success) {
+        isApproved[msg.sender][_address] = false;
+        return true;
+    }
+
     //Retrieve a list of all patients address
     function getPatients() public view returns(address[]) {
         return patientList;

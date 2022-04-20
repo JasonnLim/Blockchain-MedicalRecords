@@ -157,6 +157,11 @@ class DesktopContainer extends Component {
                         <a style={{color:'black'}}>Allow Access</a>
                       </Link>
                     </Dropdown.Item>
+                    <Dropdown.Item>
+                      <Link route='/revoke-doctor'>
+                        <a style={{color:'black'}}>Revoke Access</a>
+                      </Link>
+                    </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
 
@@ -276,6 +281,11 @@ class MobileContainer extends Component {
                 <Dropdown.Item>
                   <Link route='/approve-doctor'>
                     <a style={{color:'black'}}>Allow Access</a>
+                  </Link>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <Link route='/revoke-doctor'>
+                    <a style={{color:'black'}}>Revoke Access</a>
                   </Link>
                 </Dropdown.Item>
               </Dropdown.Menu>
