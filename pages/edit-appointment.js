@@ -33,7 +33,7 @@ class EditAppointment extends Component {
         try {
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.editAppointment(
+            await record.methods.updateAppointment(
                 patientaddr, date, time, diagnosis, prescription, description, status
             ).send({ from: accounts[0] });
 
