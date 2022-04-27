@@ -173,7 +173,7 @@ contract Record {
     //Retrieve appointment details from appointment page and store the details into the blockchain
     function updateAppointment(address _addr, string _date, string _time, string _diagnosis, string _prescription, string _description, string _status) public {
         require(isDoctor[msg.sender]);
-        var a = appointments[msg.sender];
+        var a = appointments[_addr];
         
         a.doctoraddr = msg.sender;
         a.patientaddr = _addr;
