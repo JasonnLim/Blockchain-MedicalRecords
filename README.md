@@ -23,5 +23,4 @@ npm run test
 cd ethereum
 node compile.js
 node deploy.js
-Paste the contract deployed address above
 ```
