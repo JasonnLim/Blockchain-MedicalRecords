@@ -1,7 +1,7 @@
 # Blockchain Medical Record System
 
 ## Full Project Demo
-https://www.youtube.com/watch?v=dCrWYb93x_8&t=886s
+https://www.youtube.com/watch?v=JIswvyxmw3k&t=0s
 
 ## Setup
 1. Download Metamask Extension from chrome
